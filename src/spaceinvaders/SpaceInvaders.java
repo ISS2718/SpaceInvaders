@@ -5,17 +5,19 @@
  */
 package spaceinvaders;
 
+import Engine.*;
+
 /**
  *
  * @author isaac
  */
 public class SpaceInvaders {
-
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Game g = new Game();
+        g.gameLoop();
     }
     
 }

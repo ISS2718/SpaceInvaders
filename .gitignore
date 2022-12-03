@@ -1,2 +1,6 @@
 /dist/
 /build/
+/SpaceInvaders/build/
+/SpaceInvaders/dist/
+/SpaceInvaders/nbproject/private/
+/SpaceInvaders_On_Terminal/nbproject/private/

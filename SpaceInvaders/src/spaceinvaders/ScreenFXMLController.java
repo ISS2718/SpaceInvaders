@@ -12,7 +12,10 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -20,21 +23,21 @@ import javafx.scene.control.Label;
  */
 public class ScreenFXMLController implements Initializable {
     private Game g;
-    private Thread game_loop;
-    private static Runnable t1;
     
     @FXML
-    private Label label;
-    
+    private AnchorPane main;
+
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-     
-    }
+    private Button m_Start;
+
+    @FXML
+    private Button m_Tutorial;
     
+    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        g = new Game();
-        game_loop = new Thread();
+        g = new Game(main.getWidth(), main.getHeight());
     }    
     
 }

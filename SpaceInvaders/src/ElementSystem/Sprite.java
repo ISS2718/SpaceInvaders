@@ -5,23 +5,33 @@
  */
 package ElementSystem;
 
+import javafx.scene.image.*;
+
 /**
  *
  * @author isaac
  */
 public class Sprite {
-   private char character;
+   /**
+ *
+ */
+private ImageView sprite;
    
    /**
     * Default constructor.
     * 
     * @param character 
     */
-   public Sprite(char character) {
-       this.character = character;
+   public Sprite(String path_image) {
+       try {
+                this.sprite = new ImageView(path_image);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("AAAAAAAAAAAAAAAAAAA:" + e.getMessage());
+        }
    } 
    
-   public char getSprite() {
-       return character;
+   public ImageView getImageView() {
+       return sprite;
    }
 }

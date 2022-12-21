@@ -33,22 +33,9 @@ public class Barrier extends Static {
      */
     public Barrier(int height, int width, int x, int y) {
         super(x, y);
-        this.sprite = new Sprite('+');
+        this.sprite = new Sprite("sprites/barrera.png");
         this.height = height;
         this.width = width;
-        area = new char[width][height];
-        int quant = 0;
-        for(int i = 0; i < width; i++) {
-            quant++;
-            for(int j = 0; j < quant; j++) {
-                area[i][j] = sprite.getSprite();
-            }
-            if(height > quant) {
-                for(int j = height - quant; j < height; j++) {
-                    area[i][j] = sprite.getSprite();
-                }
-            }
-        }
     }
 
     /**
@@ -89,8 +76,6 @@ public class Barrier extends Static {
      * @param y
      */
     public void removePiece(int x, int y) {
-        if(x < width && y < height) {
-            area[x][y] = ' ';
-        }
+
     }
 }

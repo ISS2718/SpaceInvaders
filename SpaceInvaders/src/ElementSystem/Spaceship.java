@@ -1,6 +1,7 @@
 package ElementSystem;
 
 import java.util.*;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * 
@@ -12,11 +13,6 @@ public class Spaceship extends Move {
     private boolean front_move;
     
     /**
-     * 
-     */
-     private final double max_x_coordinate;
-    
-    /**
     * 
     */
     private final Sprite sprite;
@@ -26,10 +22,9 @@ public class Spaceship extends Move {
      * @param front_move
      */
     public Spaceship(boolean front_move, Coordinates size) {
-        super((front_move ? 0.0 : size.getX()), size.getY(), 2.0);      
+        super((front_move ? 0.0 : size.getX()), 0, 2.0, size);      
         this.front_move = front_move;
-        max_x_coordinate = size.getX();
-        sprite = new Sprite('V');
+        sprite = new Sprite("sprites/nave.png");
     }
    
     /**
@@ -37,12 +32,15 @@ public class Spaceship extends Move {
      * 
      * @param x_coordinate
      */
-    public void draw(double x_coordinate) {
-        for(int j = 0; j < x_coordinate; j++) {
-            System.out.print(' ');
-        }
-        System.out.print(sprite.getSprite());
-    } 
+   public void draw(AnchorPane main) {
+        sprite.getImageView().setLayoutX(coordinates.getX() - sprite.getImageView().getImage().getWidth());
+        sprite.getImageView().setLayoutY(coordinates.getY());
+        main.getChildren().add(sprite.getImageView());
+    }
+   
+    public void destructor(AnchorPane main) {
+        main.getChildren().remove(sprite.getImageView());
+    }   
     
     /**
      * 
@@ -50,7 +48,7 @@ public class Spaceship extends Move {
      */
     public void move() {
          if(front_move == true) {
-             if((coordinates.getX() + 1) < max_x_coordinate) {
+             if((coordinates.getX() + 1) < (screen_size.getX() - sprite.getImageView().getImage().getWidth())) {
                  coordinates.setX(coordinates.getX() + speed);
              }
         } else if((coordinates.getX() - 1) > 0) {
@@ -66,7 +64,7 @@ public class Spaceship extends Move {
         if(front_move) {
                coordinates.setX(0.0);
         } else {
-            coordinates.setX(max_x_coordinate);
+            coordinates.setX(screen_size.getX() - sprite.getImageView().getImage().getWidth());
         }
     }
 }

@@ -1,5 +1,7 @@
 package ElementSystem;
 
+import javafx.scene.layout.AnchorPane;
+
 /**
  * This class implements the array of invading aliens 
  * heading toward the cannon.
@@ -36,9 +38,14 @@ public class AliensMatrix extends Move {
     private int quantity_columns;
 
     /**
-     * Quantity of rows in the alies matrix;
+     * Quantity of rows in the alies matrix.
      */
     private int quantity_row = 5;
+    
+    /**
+     *  Sprite size (width, height).
+     */
+    private Coordinates sprite_size;
 
     /**
      * Default constructor for AliensMatrix.
@@ -52,17 +59,18 @@ public class AliensMatrix extends Move {
      * @param quantity_columns Quantity of columns in the aliens matrix.
      * @param size Dimensions of the game display screen
      */
-    public AliensMatrix(int quantity_columns, Coordinates size) {
-       super(0.0, size.getY(), 1.0);
+    public AliensMatrix(int quantity_columns, double speed, Coordinates size) {
+       super(0, 0, speed, size);
        this.quantity_columns = quantity_columns;
        aliens = new Alien[5][this.quantity_columns];
        for (int i = 0; i < this.quantity_columns; i++) {
-           aliens[0][i] = new Alien(1);
-           aliens[1][i] = new Alien(1);
-           aliens[2][i] = new Alien(2);
-           aliens[3][i] = new Alien(2);
-           aliens[4][i] = new Alien(3);
+           aliens[0][i] = new Alien(1, speed,  size);
+           aliens[1][i] = new Alien(1, speed,  size);
+           aliens[2][i] = new Alien(2, speed,  size);
+           aliens[3][i] = new Alien(2, speed,  size);
+           aliens[4][i] = new Alien(3, speed,  size);
        }
+       sprite_size = new Coordinates(aliens[0][0].getSprite().getImageView().getImage().getWidth(), aliens[0][0].getSprite().getImageView().getImage().getHeight());
     }
 
     /**
@@ -70,34 +78,41 @@ public class AliensMatrix extends Move {
      * @param line 
      * @param x_coordinate
      */
-    public void draw(int line, double x_coordinate) {
-        for(int j = 0; j < x_coordinate; j++) {
-            System.out.print(' ');
-        }
-        if(line < quantity_row) {
-            for (int j = 0; j < quantity_columns; j++) {
-                System.out.print(aliens[line][j].getSprite().getSprite());
+       public void draw(AnchorPane main) {
+           for (int i = 4; i >= 0; i--) {
+                for (int j = 0; j < quantity_columns; j++) {
+                    aliens[i][j].getSprite().getImageView().setLayoutX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getSprite().getImageView().setLayoutY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    main.getChildren().add(aliens[i][j].getSprite().getImageView());
+                }
             }
         }
-    }
+       
+       public void destructor(AnchorPane main) {
+            for (int i = 4; i >= 0; i--) {
+                for (int j = 0; j < quantity_columns; j++) {
+                    main.getChildren().remove(aliens[i][j].getSprite().getImageView());
+                }
+            }
+        }   
     
     /**
      * @param max_coodinates
      */
-    public void move(Coordinates max_coordinates) {
+    public void move() {
          if(front_move == true) {
-            if(coordinates.getX() + quantity_columns <(max_coordinates.getX())) {
+            if((coordinates.getX() + (quantity_columns * sprite_size.getX()) + (quantity_columns * 3)) < (screen_size.getX())) {
                 coordinates.setX(coordinates.getX() + speed);
             } else {
-                if((coordinates.getY()) > (max_coordinates.getY() + quantity_row)) {
-                    coordinates.setY(coordinates.getY() - speed);
+                if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3)))) {
+                    coordinates.setY(coordinates.getY() + speed);
                 }
                 front_move = false;
             }
         } else if(coordinates.getX() > 0.0) {
-            if(coordinates.getX() -  1 == 0.0) {
-                if((coordinates.getY()) > (max_coordinates.getY() + quantity_row)) {
-                    coordinates.setY(coordinates.getY() - speed);
+            if(coordinates.getX() -  speed == 0.0) {
+                if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3))))  {
+                    coordinates.setY(coordinates.getY() + speed);
                 }
                 front_move = true;
             } 

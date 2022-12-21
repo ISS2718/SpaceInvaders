@@ -18,10 +18,10 @@ public class Bullet extends Move {
     /**
      * Default constructor
      */
-    public Bullet(double speed) {
-        super(0.0, 0.0, speed);
+    public Bullet(double speed, Coordinates size) {
+        super(0.0, 0.0, speed, size);
         flagShot = false;
-        sprite = new Sprite('^');
+        sprite = new Sprite("sprites/tiro.png");
     }
 
     /**
@@ -33,7 +33,7 @@ public class Bullet extends Move {
         for(int j = 0; j < x_coordinate; j++) {
             System.out.print(' ');
         }
-        System.out.print(sprite.getSprite());
+        //System.out.print(sprite.getSprite());
     } 
     
     /**

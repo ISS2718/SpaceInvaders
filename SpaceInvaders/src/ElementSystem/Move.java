@@ -11,12 +11,14 @@ package ElementSystem;
  */
 public class Move {
     
-    public Coordinates coordinates;
-    public double speed;
+    protected Coordinates screen_size;
+    protected Coordinates coordinates;
+    protected double speed;
     
-    Move(double x, double y, double speed) {
+    Move(double x, double y, double speed, Coordinates screen_size) {
         coordinates = new Coordinates(x , y);
         this.speed = speed;
+        this.screen_size = screen_size;
     }
     
     /**
@@ -35,5 +37,9 @@ public class Move {
      */
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+    
+    public Coordinates getScreenSize() {
+        return screen_size;
     }
 }

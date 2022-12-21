@@ -42,11 +42,11 @@ public class Alien extends Move {
      * 
      * @param type type of alien (1, 2 or 3). Dwfault is type 1.
      */
-    public Alien(int type) {
-        super(0.0, 0.0, 1.0);
+    public Alien(int type,  double speed, Coordinates size) {
+        super(0.0, 0.0, speed, size);
         this.type = type;
         setTypeSprite();
-        bullet = new Bullet(1.0);
+        bullet = new Bullet(1.0, size);
     }
     
     /**
@@ -64,16 +64,16 @@ public class Alien extends Move {
     private void setTypeSprite() {
         switch (type) {
             case 1:
-                sprite = new Sprite('@');
+                sprite = new Sprite("sprites/alien1.png");
                 break;
             case 2:
-                sprite = new Sprite('$');
+                sprite = new Sprite("sprites/alien2.png");
                 break;
             case 3:
-                sprite = new Sprite('&');
+                sprite = new Sprite("sprites/alien3.png");
                 break;
             default:
-                sprite = new Sprite('@');
+                sprite = new Sprite("sprites/alien1.png");
                 break;
         }
     }

@@ -6,9 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Current File",
+            "name": "Launch Ex2Lista11",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "servidor.Ex2Lista11",
+            "projectName": ""
         },
         {
             "type": "java",

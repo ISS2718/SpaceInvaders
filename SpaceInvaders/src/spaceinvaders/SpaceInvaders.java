@@ -5,7 +5,9 @@
  */
 package spaceinvaders;
 
+import java.awt.event.KeyEvent;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,7 +24,9 @@ public class SpaceInvaders extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("ScreenFXML.fxml"));
         
         Scene scene = new Scene(root);
+        
         stage.setResizable(false);
+        stage.setTitle("Space Invaders");
         stage.setScene(scene);
         stage.show();
     }

@@ -130,12 +130,14 @@ public class ScreenFXMLController implements Initializable {
                        case KP_LEFT:
                            if(!onMenu) {
                                 System.out.println("to the left");
+                                g.getCannon().moveLeft();
                            }
                            break;
                        case RIGHT:
                        case KP_RIGHT:
                            if(!onMenu) {
                                 System.out.println("to the right");
+                                g.getCannon().moveRight();
                             }  
                            break;
                        case SPACE:

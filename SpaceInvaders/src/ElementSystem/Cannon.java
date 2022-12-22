@@ -35,14 +35,20 @@ public class Cannon extends Move {
      * 
      * @param x_coordinate
      */
-    public void draw(AnchorPane main) {
-        sprite.getImageView().setLayoutX(coordinates.getX());
-        sprite.getImageView().setLayoutY(coordinates.getY() - sprite.getImageView().getImage().getHeight());
-        main.getChildren().add(sprite.getImageView());
+    public void drawMove() {
+        sprite.getImageView().setX(coordinates.getX());
     }
     
     public void destructor(AnchorPane main) {
         main.getChildren().remove(sprite.getImageView());
+    }
+    
+        public void draw(AnchorPane main) {
+        sprite.getImageView().setLayoutX(0);
+        sprite.getImageView().setLayoutY(0);
+        sprite.getImageView().setX(coordinates.getX());
+        sprite.getImageView().setLayoutY(coordinates.getY() - sprite.getImageView().getImage().getHeight());
+        main.getChildren().add(sprite.getImageView());
     }
     
     public Sprite getSprite() {
@@ -56,16 +62,18 @@ public class Cannon extends Move {
             } else if (coordinates.getX()  >  0) {
                 coordinates.setX(coordinates.getX() - speed);
             }
+           drawMove();
         }
     }
     
-        public void moveRight() {
+    public void moveRight() {
         if((coordinates.getX() +  sprite.getImageView().getImage().getWidth())  !=  screen_size.getX()) {
-            if(((coordinates.getX() +  sprite.getImageView().getImage().getWidth()) + speed)  >  screen_size.getX()) {
-                coordinates.setX(screen_size.getX() -  sprite.getImageView().getImage().getWidth());
-            } else if (((coordinates.getX() +  sprite.getImageView().getImage().getWidth()) + speed)  <  screen_size.getX()) {
-                coordinates.setX(coordinates.getX() + speed);
-            }
+            if (((coordinates.getX() +  sprite.getImageView().getImage().getWidth()) + speed)  >  screen_size.getX()) {
+                coordinates.setX(screen_size.getX() - sprite.getImageView().getImage().getWidth());
+            } else {
+                 coordinates.setX(coordinates.getX() + speed);
+             }
+            drawMove();
         }
     }
 }

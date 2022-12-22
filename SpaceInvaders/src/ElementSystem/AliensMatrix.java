@@ -81,8 +81,10 @@ public class AliensMatrix extends Move {
        public void draw(AnchorPane main) {
            for (int i = 4; i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getSprite().getImageView().setLayoutX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getSprite().getImageView().setLayoutY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].getSprite().getImageView().setLayoutX(0);
+                    aliens[i][j].getSprite().getImageView().setLayoutY(0);
+                    aliens[i][j].getSprite().getImageView().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getSprite().getImageView().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
                     main.getChildren().add(aliens[i][j].getSprite().getImageView());
                 }
             }

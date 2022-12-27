@@ -9,6 +9,7 @@ import Engine.Game;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 
 import javafx.fxml.FXML;
@@ -35,6 +36,12 @@ public class ScreenFXMLController implements Initializable {
     private Game g;
     
     private boolean onMenu;
+    
+    private boolean pressedLEFT;
+    private boolean pressedRIGHT;
+    private boolean pressedSPACE;
+    
+    private AnimationTimer timer;
     
     @FXML
     private AnchorPane main;
@@ -70,6 +77,7 @@ public class ScreenFXMLController implements Initializable {
     }
     
     public void menuReturn() {
+        timer.stop();
         g.getCannon().destructor(main);
         g.getAliensMatrix().destructor(main);
         menuEnable();
@@ -122,32 +130,34 @@ public class ScreenFXMLController implements Initializable {
         onMenu = false;
         
         main.getScene().setOnKeyPressed(new EventHandler<KeyEvent> () {
-               @Override
+                      
+            @Override
                public void handle(KeyEvent event) {
-                   System.out.println(event.getCode());
+                   //System.out.println(event.getCode());
                    switch (event.getCode()) {
                        case LEFT:
                        case KP_LEFT:
                            if(!onMenu) {
-                                System.out.println("to the left");
-                                g.getCannon().moveLeft();
+                                //System.out.println("to the left");
+                                 pressedLEFT = true;
                            }
                            break;
                        case RIGHT:
                        case KP_RIGHT:
                            if(!onMenu) {
-                                System.out.println("to the right");
-                                g.getCannon().moveRight();
+                                //System.out.println("to the right");
+                                pressedRIGHT = true;
                             }  
                            break;
                        case SPACE:
                            if(!onMenu) {
-                                System.out.println("SPACEEEEEEEEEEE");
+                                //System.out.println("SPACEEEEEEEEEEE");
+                                pressedSPACE = true;
                            }
                            break;
                         case ESCAPE:
                            if(!onMenu) {
-                                System.out.println("ESCAPEEEEEEEEEE");
+                                //System.out.println("ESCAPEEEEEEEEEE");
                                 menuReturn();
                             }
                            break;
@@ -161,12 +171,35 @@ public class ScreenFXMLController implements Initializable {
         
         g.getCannon().draw(main);
         g.getAliensMatrix().draw(main);
+        
+        timer.start();
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        pressedLEFT = false;
+        pressedRIGHT = false;
+        pressedSPACE = false;
+        
         onMenu = true;
+        
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                g.getAliensMatrix().move();
+                
+                if(pressedLEFT) {
+                    g.getCannon().moveLeft();
+                    pressedLEFT = false;
+                }
+                
+                if (pressedRIGHT) {
+                    g.getCannon().moveRight();
+                    pressedRIGHT = false;
+                }
+            }
+        };
     }    
     
 }

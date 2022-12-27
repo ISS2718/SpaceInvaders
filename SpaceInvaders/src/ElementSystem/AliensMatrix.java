@@ -90,6 +90,15 @@ public class AliensMatrix extends Move {
             }
         }
        
+       public void drawMove() {
+            for (int i = 4; i >= 0; i--) {
+               for (int j = 0; j < quantity_columns; j++) {
+                    aliens[i][j].getSprite().getImageView().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getSprite().getImageView().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+               }
+           }
+        }
+       
        public void destructor(AnchorPane main) {
             for (int i = 4; i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
@@ -103,23 +112,24 @@ public class AliensMatrix extends Move {
      */
     public void move() {
          if(front_move == true) {
-            if((coordinates.getX() + (quantity_columns * sprite_size.getX()) + (quantity_columns * 3)) < (screen_size.getX())) {
+            if((((quantity_columns - 2) * 3) + coordinates.getX() + (quantity_columns * sprite_size.getX())) < (screen_size.getX())) {
                 coordinates.setX(coordinates.getX() + speed);
             } else {
                 if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3)))) {
-                    coordinates.setY(coordinates.getY() + speed);
+                    coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
                 front_move = false;
             }
         } else if(coordinates.getX() > 0.0) {
             if(coordinates.getX() -  speed == 0.0) {
                 if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3))))  {
-                    coordinates.setY(coordinates.getY() + speed);
+                    coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
                 front_move = true;
             } 
             coordinates.setX(coordinates.getX() - speed);
         } 
+        drawMove();
     }
 
     public int getcolumns() {

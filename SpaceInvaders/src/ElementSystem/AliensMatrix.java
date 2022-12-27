@@ -1,5 +1,8 @@
 package ElementSystem;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -86,6 +89,7 @@ public class AliensMatrix extends Move {
                     aliens[i][j].getSprite().getImageView().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
                     aliens[i][j].getSprite().getImageView().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
                     main.getChildren().add(aliens[i][j].getSprite().getImageView());
+                     aliens[i][j].getBullet().draw(main);
                 }
             }
         }
@@ -120,15 +124,18 @@ public class AliensMatrix extends Move {
                 }
                 front_move = false;
             }
-        } else if(coordinates.getX() > 0.0) {
-            if(coordinates.getX() -  speed == 0.0) {
+        } else if(coordinates.getX() >=  0.0) {
+            if((coordinates.getX() -  speed == 0.0) || (coordinates.getX()== 0.0)) {
                 if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3))))  {
                     coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
                 front_move = true;
-            } 
-            coordinates.setX(coordinates.getX() - speed);
-        } 
+            } else if(coordinates.getX() -  speed < 0.0) {
+                coordinates.setX(0);
+            } else {
+                coordinates.setX(coordinates.getX() - speed);
+            }
+        }
         drawMove();
     }
 

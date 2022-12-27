@@ -46,7 +46,7 @@ public class Game {
      */
     public Game(double width, double height) {
         screen = new Screen(width, height);
-        aliensMatrix = new AliensMatrix(11,  0.5, screen.getSize());
+        aliensMatrix = new AliensMatrix(11,  0.4, screen.getSize());
         cannon = new Cannon(20, screen.getSize());
         player = new Player(5);
         have_spaceShip = false;

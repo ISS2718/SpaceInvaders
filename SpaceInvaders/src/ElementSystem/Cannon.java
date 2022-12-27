@@ -26,29 +26,34 @@ public class Cannon extends Move {
      */
     public Cannon(double speed, Coordinates size) {
         super(size.getX()/2, size.getY(), speed, size);
-        this.bullet = new Bullet(1.0, size);
+        this.bullet = new Bullet(1.5, size, true);
         sprite = new Sprite("sprites/canhao.png");
     }
-    
-    /**
-     * 
-     * 
-     * @param x_coordinate
-     */
-    public void drawMove() {
-        sprite.getImageView().setX(coordinates.getX());
-    }
-    
+
     public void destructor(AnchorPane main) {
         main.getChildren().remove(sprite.getImageView());
     }
     
-        public void draw(AnchorPane main) {
+    public void draw(AnchorPane main) {
         sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);
         sprite.getImageView().setX(coordinates.getX());
-        sprite.getImageView().setLayoutY(coordinates.getY() - sprite.getImageView().getImage().getHeight());
+        sprite.getImageView().setY(coordinates.getY() - sprite.getImageView().getImage().getHeight());
         main.getChildren().add(sprite.getImageView());
+        
+        this.bullet.draw(main);
+    }
+    
+    public void drawMove() {
+        sprite.getImageView().setX(coordinates.getX());
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Bullet getBullet() {
+        return bullet;
     }
     
     public Sprite getSprite() {

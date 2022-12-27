@@ -46,7 +46,15 @@ public class Alien extends Move {
         super(0.0, 0.0, speed, size);
         this.type = type;
         setTypeSprite();
-        bullet = new Bullet(1.0, size);
+        bullet = new Bullet(1.0, size, false);
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public Bullet getBullet() {
+        return bullet;
     }
     
     /**

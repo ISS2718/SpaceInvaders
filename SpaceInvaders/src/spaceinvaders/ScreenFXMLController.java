@@ -141,26 +141,26 @@ public class ScreenFXMLController implements Initializable {
                                 //System.out.println("to the left");
                                  pressedLEFT = true;
                            }
-                           break;
+
                        case RIGHT:
                        case KP_RIGHT:
                            if(!onMenu) {
                                 //System.out.println("to the right");
                                 pressedRIGHT = true;
                             }  
-                           break;
+
                        case SPACE:
                            if(!onMenu) {
                                 //System.out.println("SPACEEEEEEEEEEE");
                                 pressedSPACE = true;
                            }
-                           break;
+
                         case ESCAPE:
                            if(!onMenu) {
                                 //System.out.println("ESCAPEEEEEEEEEE");
                                 menuReturn();
                             }
-                           break;
+
                        default:
                            break;
                    }
@@ -198,6 +198,15 @@ public class ScreenFXMLController implements Initializable {
                     g.getCannon().moveRight();
                     pressedRIGHT = false;
                 }
+                
+                if (pressedSPACE) {
+                    g.getCannon().getBullet().shot( g.getCannon().getCoordinates(), false);
+                    
+                    if(g.getCannon().getBullet().getFlagShot() == false) {
+                        pressedSPACE = false;
+                    }
+                }
+                
             }
         };
     }    

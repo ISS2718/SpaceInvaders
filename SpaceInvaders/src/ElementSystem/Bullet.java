@@ -25,6 +25,8 @@ public class Bullet extends Move {
      */
     private boolean missedShot;
     
+    private boolean shoted;
+    
     /**
      * 
      */
@@ -44,8 +46,9 @@ public class Bullet extends Move {
             max_Y_coordinates = size.getY();
         }
         
-        sprite = new Sprite("sprites/tiro.png");
+        shoted =false;
         
+        sprite = new Sprite("sprites/tiro.png");
     }
 
     /**
@@ -56,15 +59,8 @@ public class Bullet extends Move {
     public void draw(AnchorPane main) {
         sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);
-        
-        
-        if(isCannon) {
-            sprite.getImageView().setX(0);
-            sprite.getImageView().setY((screen_size.getY() - sprite.getImageView().getImage().getHeight()));
-        } else {
-            sprite.getImageView().setX((screen_size.getX() - sprite.getImageView().getImage().getWidth()));
-            sprite.getImageView().setY(0);
-        }
+       
+        setInitialPosition();
         
         main.getChildren().add(sprite.getImageView());
         sprite.getImageView().setVisible(false);
@@ -90,19 +86,23 @@ public class Bullet extends Move {
         return flagShot;
     }
     
+    public Sprite getSprite() {
+        return sprite;
+    }
+    
     /**
      *
      */
     public void move() {
         if(isCannon) {
-            System.out.println("Coordenada Y: " + (coordinates.getY() -  sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
+            //System.out.println("Coordenada Y: " + (coordinates.getY() -  sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
             if((coordinates.getY() - sprite.getImageView().getImage().getHeight())  > max_Y_coordinates) {
                 coordinates.setY(coordinates.getY()  -  speed);
             } else {
                 missedShot = true;
             }
         } else {
-            System.out.println("Coordenada Y: " + (coordinates.getY() + sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
+            //System.out.println("Coordenada Y: " + (coordinates.getY() + sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
             if ((coordinates.getY() + sprite.getImageView().getImage().getHeight()) > max_Y_coordinates) {
                 coordinates.setY(coordinates.getY() + speed);
             } else {
@@ -111,6 +111,20 @@ public class Bullet extends Move {
         }
         drawMove();
     }
+    
+    public void setInitialPosition() {
+         if(isCannon) {
+            sprite.getImageView().setX(0);
+            sprite.getImageView().setY((screen_size.getY() - sprite.getImageView().getImage().getHeight()));
+        } else {
+            sprite.getImageView().setX((screen_size.getX() - sprite.getImageView().getImage().getWidth()));
+            sprite.getImageView().setY(0);
+        }
+    }
+    
+    public void setShoted() {
+        shoted = true;
+    }
 
     /**
      * 
@@ -118,18 +132,20 @@ public class Bullet extends Move {
      * @param max_coordinates
      * @param shoted
      */
-    public void shot(Coordinates ini_coordinates, boolean shoted) {
+    public void shot(Coordinates ini_coordinates) {
         if(flagShot == false) {
             this.coordinates.setCoordinates(ini_coordinates);
             drawMove();
-            sprite.getImageView().setVisible(true);
             flagShot = true;
-            missedShot = false;            
+            missedShot = false;
+            shoted = false;
+            sprite.getImageView().setVisible(true);            
         } else if ((shoted == false) && (missedShot == false)) {
             move();
         } else {
             flagShot = false;
             sprite.getImageView().setVisible(false);
+            setInitialPosition();
         }
     }
 }

@@ -75,7 +75,30 @@ public class AliensMatrix extends Move {
        }
        sprite_size = new Coordinates(aliens[0][0].getSprite().getImageView().getImage().getWidth(), aliens[0][0].getSprite().getImageView().getImage().getHeight());
     }
-
+    
+    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
+        boolean r = false;
+        for (int i = 4; i >= 0; i--) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if(aliens[i][j].getIsAlive()) {
+                    if (((aliens[i][j].getCoordinates().getY() - aliens[i][j].getSprite().getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
+                            && (aliens[i][j].getCoordinates().getY() + aliens[i][j].getSprite().getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+                        if (((aliens[i][j].getCoordinates().getX() - aliens[i][j].getSprite().getImageView().getImage().getWidth()) <= coordinates_for_check.getX())
+                                && (aliens[i][j].getCoordinates().getX() + aliens[i][j].getSprite().getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                            System.out.println("Acertei!");
+                            System.out.println("Coordenadada Alien - X: " + aliens[i][j].getCoordinates().getX() + ", Y: " + aliens[i][j].getCoordinates().getY());
+                            System.out.println("Coordenadada Tiro - X: " + coordinates_for_check.getX() + ", Y: " + coordinates_for_check.getY());
+                            aliens[i][j].setDead();
+                            r = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return r;
+    }
+    
     /**
      * 
      * @param line 
@@ -84,12 +107,9 @@ public class AliensMatrix extends Move {
        public void draw(AnchorPane main) {
            for (int i = 4; i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getSprite().getImageView().setLayoutX(0);
-                    aliens[i][j].getSprite().getImageView().setLayoutY(0);
-                    aliens[i][j].getSprite().getImageView().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getSprite().getImageView().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
-                    main.getChildren().add(aliens[i][j].getSprite().getImageView());
-                     aliens[i][j].getBullet().draw(main);
+                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].draw(main);
                 }
             }
         }
@@ -97,8 +117,9 @@ public class AliensMatrix extends Move {
        public void drawMove() {
             for (int i = 4; i >= 0; i--) {
                for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getSprite().getImageView().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getSprite().getImageView().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].drawMove();
                }
            }
         }

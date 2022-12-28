@@ -130,41 +130,35 @@ public class ScreenFXMLController implements Initializable {
         onMenu = false;
         
         main.getScene().setOnKeyPressed(new EventHandler<KeyEvent> () {
-                      
-            @Override
-               public void handle(KeyEvent event) {
-                   //System.out.println(event.getCode());
-                   switch (event.getCode()) {
-                       case LEFT:
-                       case KP_LEFT:
-                           if(!onMenu) {
-                                //System.out.println("to the left");
-                                 pressedLEFT = true;
-                           }
-
-                       case RIGHT:
-                       case KP_RIGHT:
-                           if(!onMenu) {
-                                //System.out.println("to the right");
-                                pressedRIGHT = true;
-                            }  
-
-                       case SPACE:
-                           if(!onMenu) {
-                                //System.out.println("SPACEEEEEEEEEEE");
-                                pressedSPACE = true;
-                           }
-
-                        case ESCAPE:
-                           if(!onMenu) {
-                                //System.out.println("ESCAPEEEEEEEEEE");
-                                menuReturn();
-                            }
-
-                       default:
-                           break;
-                   }
-               }
+                @Override
+                public void handle(KeyEvent event) {
+                     switch (event.getCode()) {
+                         case LEFT:
+                         case KP_LEFT:
+                             if(!onMenu) {
+                                   pressedLEFT = true;
+                             }
+                             break;
+                         case RIGHT:
+                         case KP_RIGHT:
+                             if(!onMenu) {
+                                  pressedRIGHT = true;
+                              }  
+                             break;
+                         case SPACE:
+                             if(!onMenu) {
+                                  pressedSPACE = true;
+                             }
+                             break;
+                          case ESCAPE:
+                             if(!onMenu) {
+                                  menuReturn();
+                              }
+                             break;
+                         default:
+                             break;
+                     }
+                }
          });
         
         g = new Game(main.getPrefWidth(), main.getPrefHeight());
@@ -188,6 +182,7 @@ public class ScreenFXMLController implements Initializable {
             @Override
             public void handle(long now) {
                 g.getAliensMatrix().move();
+                g.checkColision();
                 
                 if(pressedLEFT) {
                     g.getCannon().moveLeft();
@@ -200,8 +195,7 @@ public class ScreenFXMLController implements Initializable {
                 }
                 
                 if (pressedSPACE) {
-                    g.getCannon().getBullet().shot( g.getCannon().getCoordinates(), false);
-                    
+                    g.getCannon().getBullet().shot( g.getCannon().getCoordinates());
                     if(g.getCannon().getBullet().getFlagShot() == false) {
                         pressedSPACE = false;
                     }

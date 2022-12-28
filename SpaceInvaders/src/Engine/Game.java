@@ -51,6 +51,14 @@ public class Game {
         player = new Player(5);
         have_spaceShip = false;
     }
+    
+    public void checkColision() {
+        if(cannon.getBullet().getFlagShot()) {
+            if(aliensMatrix.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
+                cannon.getBullet().setShoted();
+            }
+        }
+    }
 
     /**
      * 

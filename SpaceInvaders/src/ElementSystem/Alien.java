@@ -1,5 +1,7 @@
 package ElementSystem;
 
+import javafx.scene.layout.AnchorPane;
+
 /**
  * This class implements the invading aliens. 
  * The aliens are identified by 3 different types (1, 2, 3)
@@ -11,6 +13,11 @@ package ElementSystem;
  * @author isaac
  */
 public class Alien extends Move {
+    /**
+     * 
+     */
+    boolean isAlive;
+    
     /**
      * Alien type:
      * 1 - type one charactere ('sprite'): @ -> Bot position. 
@@ -47,6 +54,21 @@ public class Alien extends Move {
         this.type = type;
         setTypeSprite();
         bullet = new Bullet(1.0, size, false);
+        isAlive = true;
+    }
+    
+    public void draw(AnchorPane main) {
+        sprite.getImageView().setLayoutX(0);
+        sprite.getImageView().setLayoutY(0);
+        sprite.getImageView().setX(coordinates.getX());
+        sprite.getImageView().setY(coordinates.getY());
+        main.getChildren().add(sprite.getImageView());
+        bullet.draw(main);
+    }
+    
+    public void drawMove() {
+        sprite.getImageView().setX(coordinates.getX());
+        sprite.getImageView().setY(coordinates.getY());
     }
     
     /**
@@ -55,6 +77,20 @@ public class Alien extends Move {
      */
     public Bullet getBullet() {
         return bullet;
+    }
+    
+    public boolean getIsAlive() {
+        return isAlive;
+    }
+
+    public void setAlive() {
+        isAlive = true;
+        sprite.getImageView().setVisible(true);
+    }
+    
+    public void setDead() {
+        isAlive = false;
+        sprite.getImageView().setVisible(false);
     }
     
     /**

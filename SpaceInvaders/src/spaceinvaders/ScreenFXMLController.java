@@ -200,7 +200,6 @@ public class ScreenFXMLController implements Initializable {
                         pressedSPACE = false;
                     }
                 }
-                
             }
         };
     }    

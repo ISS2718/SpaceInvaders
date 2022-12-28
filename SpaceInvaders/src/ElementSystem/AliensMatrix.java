@@ -79,7 +79,7 @@ public class AliensMatrix extends Move {
     public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
         boolean r = false;
         colisionCheck:
-        for (int i = 4; i >= 0; i--) {
+        for (int i = (quantity_row - 1); i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
                 if(aliens[i][j].getIsAlive()) {
                     if (((aliens[i][j].getCoordinates().getY() - aliens[i][j].getSprite().getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
@@ -103,7 +103,7 @@ public class AliensMatrix extends Move {
      * @param x_coordinate
      */
        public void draw(AnchorPane main) {
-           for (int i = 4; i >= 0; i--) {
+           for (int i = (quantity_row - 1); i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
                     aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
                     aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
@@ -113,7 +113,7 @@ public class AliensMatrix extends Move {
         }
        
        public void drawMove() {
-            for (int i = 4; i >= 0; i--) {
+            for (int i = (quantity_row - 1); i >= 0; i--) {
                for (int j = 0; j < quantity_columns; j++) {
                     aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
                     aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
@@ -123,7 +123,7 @@ public class AliensMatrix extends Move {
         }
        
        public void destructor(AnchorPane main) {
-            for (int i = 4; i >= 0; i--) {
+            for (int i = (quantity_row - 1); i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
                     main.getChildren().remove(aliens[i][j].getSprite().getImageView());
                 }
@@ -177,26 +177,14 @@ public class AliensMatrix extends Move {
     }
     
 
-    /**
-     * @param columm
-     * @param row
-     */
-    public void removeAlien(int columm, int row) {
-        if(verifyAlienExistense(columm, row)) {
-            aliens[columm][row] = null;
-        } 
+    public void updateNumberRowsColumns() {
+        
+        for (int i = (quantity_row - 1); i >= 0; i--) {
+               for (int j = 0; j < quantity_columns; j++) {
+                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].drawMove();
+               }
+         }
     }
-
-    /**
-     * @param columm
-     * @param row
-     * @return
-     */
-    public boolean verifyAlienExistense(int columm, int row) {
-        if(aliens[columm][row] != null) {
-            return true;
-        }
-        return false;
-    }
-
 }

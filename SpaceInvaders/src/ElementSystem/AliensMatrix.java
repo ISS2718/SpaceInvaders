@@ -95,6 +95,9 @@ public class AliensMatrix extends Move {
                     }
                 }
             }
+            if(r == true) {
+                break;
+            }
         }
         return r;
     }

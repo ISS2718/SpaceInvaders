@@ -78,6 +78,7 @@ public class AliensMatrix extends Move {
     
     public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
         boolean r = false;
+        colisionCheck:
         for (int i = 4; i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
                 if(aliens[i][j].getIsAlive()) {
@@ -85,18 +86,12 @@ public class AliensMatrix extends Move {
                             && (aliens[i][j].getCoordinates().getY() + aliens[i][j].getSprite().getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
                         if (((aliens[i][j].getCoordinates().getX() - aliens[i][j].getSprite().getImageView().getImage().getWidth()) <= coordinates_for_check.getX())
                                 && (aliens[i][j].getCoordinates().getX() + aliens[i][j].getSprite().getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
-                            System.out.println("Acertei!");
-                            System.out.println("Coordenadada Alien - X: " + aliens[i][j].getCoordinates().getX() + ", Y: " + aliens[i][j].getCoordinates().getY());
-                            System.out.println("Coordenadada Tiro - X: " + coordinates_for_check.getX() + ", Y: " + coordinates_for_check.getY());
                             aliens[i][j].setDead();
                             r = true;
-                            break;
+                            break colisionCheck; 
                         }
                     }
                 }
-            }
-            if(r == true) {
-                break;
             }
         }
         return r;

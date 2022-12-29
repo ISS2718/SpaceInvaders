@@ -63,7 +63,7 @@ public class Bullet extends Move {
         setInitialPosition();
         
         main.getChildren().add(sprite.getImageView());
-        sprite.getImageView().setVisible(false);
+        //sprite.getImageView().setVisible(false);
     }
     
     public void drawMove() { 
@@ -132,9 +132,10 @@ public class Bullet extends Move {
      * @param max_coordinates
      * @param shoted
      */
-    public void shot(Coordinates ini_coordinates) {
+    public void shot(Coordinates ini_coordinates, Sprite shot_sprite) {
         if(flagShot == false) {
-            this.coordinates.setCoordinates(ini_coordinates);
+            coordinates.setX(ini_coordinates.getX() + shot_sprite.getImageView().getImage().getWidth()/2);
+            coordinates.setY(ini_coordinates.getY() - 21);
             drawMove();
             flagShot = true;
             missedShot = false;

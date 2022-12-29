@@ -163,7 +163,7 @@ public class ScreenFXMLController implements Initializable {
                 }
                 
                 if (pressedSPACE) {
-                    g.getCannon().getBullet().shot( g.getCannon().getCoordinates());
+                    g.getCannon().getBullet().shot(g.getCannon().getCoordinates(), g.getCannon().getSprite());
                     if(g.getCannon().getBullet().getFlagShot() == false) {
                         pressedSPACE = false;
                     }

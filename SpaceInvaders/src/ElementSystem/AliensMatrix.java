@@ -82,11 +82,11 @@ public class AliensMatrix extends Move {
         for (int i = (quantity_row - 1); i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
                 if(aliens[i][j].getIsAlive()) {
-                    if (((aliens[i][j].getCoordinates().getY() - aliens[i][j].getSprite().getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
-                            && (aliens[i][j].getCoordinates().getY() + aliens[i][j].getSprite().getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+                    if (((aliens[i][j].getCoordinates().getY() - aliens[i][j].getSprite().getImageView().getImage().getHeight()) < (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
+                            && (aliens[i][j].getCoordinates().getY() + aliens[i][j].getSprite().getImageView().getImage().getHeight()) > (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
                         
-                        if (((aliens[i][j].getCoordinates().getX() - aliens[i][j].getSprite().getImageView().getImage().getWidth()) <= coordinates_for_check.getX())
-                                && (aliens[i][j].getCoordinates().getX() + aliens[i][j].getSprite().getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                        if (((aliens[i][j].getCoordinates().getX() - aliens[i][j].getSprite().getImageView().getImage().getWidth()) < coordinates_for_check.getX())
+                                && (aliens[i][j].getCoordinates().getX() + aliens[i][j].getSprite().getImageView().getImage().getWidth()) > coordinates_for_check.getX()) {
                             
                             aliens[i][j].setDead();
                             r = true;

@@ -129,38 +129,6 @@ public class ScreenFXMLController implements Initializable {
         menuDisable();
         onMenu = false;
         
-        main.getScene().setOnKeyPressed(new EventHandler<KeyEvent> () {
-                @Override
-                public void handle(KeyEvent event) {
-                     switch (event.getCode()) {
-                         case LEFT:
-                         case KP_LEFT:
-                             if(!onMenu) {
-                                   pressedLEFT = true;
-                             }
-                             break;
-                         case RIGHT:
-                         case KP_RIGHT:
-                             if(!onMenu) {
-                                  pressedRIGHT = true;
-                              }  
-                             break;
-                         case SPACE:
-                             if(!onMenu) {
-                                  pressedSPACE = true;
-                             }
-                             break;
-                          case ESCAPE:
-                             if(!onMenu) {
-                                  menuReturn();
-                              }
-                             break;
-                         default:
-                             break;
-                     }
-                }
-         });
-        
         g = new Game(main.getPrefWidth(), main.getPrefHeight());
         
         g.getCannon().draw(main);
@@ -204,4 +172,36 @@ public class ScreenFXMLController implements Initializable {
         };
     }    
     
+    public void  setupKeyListner(Scene scene) {
+        scene.setOnKeyPressed((KeyEvent event) -> {
+            switch (event.getCode()) {
+                case LEFT:
+                case KP_LEFT:
+                    if(!onMenu) {
+                        pressedLEFT = true;
+                    }
+                    break;
+                case RIGHT:
+                case KP_RIGHT:
+                    if(!onMenu) {
+                        pressedRIGHT = true;
+                    }
+                    break;
+                case SPACE:
+                    if(!onMenu) {
+                        pressedSPACE = true;
+                    }
+                    break;
+                case ESCAPE:
+                    if(!onMenu) {
+                        menuReturn();
+                    } else  {
+                        System.exit(0);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
 }

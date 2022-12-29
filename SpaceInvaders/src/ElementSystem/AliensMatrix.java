@@ -30,10 +30,10 @@ public class AliensMatrix extends Move {
     
     /**
      * Variable to define the direction of moviment of the aliens matrix.
-     * If front_move its true the aliens matrix move to the right, but 
-     * if front_move its false the aliens matrix move to the left.
+     * If right_move its true the aliens matrix move to the right, but 
+     * if right_move its false the aliens matrix move to the left.
      */
-    private boolean front_move = true;
+    private boolean right_move = true;
 
     /**
      * Quantity of columns in the aliens matrix.
@@ -84,8 +84,10 @@ public class AliensMatrix extends Move {
                 if(aliens[i][j].getIsAlive()) {
                     if (((aliens[i][j].getCoordinates().getY() - aliens[i][j].getSprite().getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
                             && (aliens[i][j].getCoordinates().getY() + aliens[i][j].getSprite().getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+                        
                         if (((aliens[i][j].getCoordinates().getX() - aliens[i][j].getSprite().getImageView().getImage().getWidth()) <= coordinates_for_check.getX())
                                 && (aliens[i][j].getCoordinates().getX() + aliens[i][j].getSprite().getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                            
                             aliens[i][j].setDead();
                             r = true;
                             break colisionCheck; 
@@ -106,7 +108,7 @@ public class AliensMatrix extends Move {
            for (int i = (quantity_row - 1); i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
                     aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
+                    aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * 3));
                     aliens[i][j].draw(main);
                 }
             }
@@ -115,9 +117,9 @@ public class AliensMatrix extends Move {
        public void drawMove() {
             for (int i = (quantity_row - 1); i >= 0; i--) {
                for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
-                    aliens[i][j].drawMove();
+                   aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
+                   aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * 3));
+                   aliens[i][j].drawMove();
                }
            }
         }
@@ -131,28 +133,41 @@ public class AliensMatrix extends Move {
         }   
     
     /**
-     * @param max_coodinates
+     * 
      */
     public void move() {
-         if(front_move == true) {
-            if((((quantity_columns - 2) * 3) + coordinates.getX() + (quantity_columns * sprite_size.getX())) < (screen_size.getX())) {
-                coordinates.setX(coordinates.getX() + speed);
+        int firstLiveColumnAlienMatrix = firstLiveColumn();
+        int lastLiveColumnAlienMatrix = lastLiveColumn();
+        int firstLiveRowAlienMatrix = firstLiveRow();
+        int lastLiveRowAlienMatrix = lastLiveRow();
+        
+        double right_speed = speed;
+        double leftt_speed = speed;
+        
+        
+        double min_height_AliensMatrix = (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3)) + ((firstLiveRowAlienMatrix* sprite_size.getY()) + (firstLiveRowAlienMatrix * 3)));
+        double origin_point_AliensMatrix =  (-1 * ((firstLiveColumnAlienMatrix * 32) + ((firstLiveColumnAlienMatrix) * 3))) + (2 * (firstLiveColumnAlienMatrix + 1));
+        double target_point_AliensMatrix = (screen_size.getX() - ((lastLiveColumnAlienMatrix - 2) * 3)) - ((lastLiveColumnAlienMatrix + 1) * sprite_size.getX());
+        
+        if(right_move == true) {
+            if(coordinates.getX() < target_point_AliensMatrix) {
+                coordinates.setX(coordinates.getX() + right_speed);
             } else {
-                if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3)))) {
+                if((coordinates.getY()) < min_height_AliensMatrix) {
                     coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
-                front_move = false;
+                right_move = false;
             }
-        } else if(coordinates.getX() >=  0.0) {
-            if((coordinates.getX() -  speed == 0.0) || (coordinates.getX()== 0.0)) {
-                if((coordinates.getY()) < (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3))))  {
+        } else if(coordinates.getX() >= origin_point_AliensMatrix) {
+            if(((coordinates.getX()) -  leftt_speed == origin_point_AliensMatrix) || (coordinates.getX() == origin_point_AliensMatrix)) {
+                if((coordinates.getY()) <min_height_AliensMatrix)  {
                     coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
-                front_move = true;
-            } else if(coordinates.getX() -  speed < 0.0) {
-                coordinates.setX(0);
+                right_move = true;
+            } else if(coordinates.getX() -  leftt_speed < origin_point_AliensMatrix) {
+                coordinates.setX(origin_point_AliensMatrix);
             } else {
-                coordinates.setX(coordinates.getX() - speed);
+                coordinates.setX(coordinates.getX() - leftt_speed);
             }
         }
         drawMove();
@@ -177,14 +192,60 @@ public class AliensMatrix extends Move {
     }
     
 
-    public void updateNumberRowsColumns() {
-        
-        for (int i = (quantity_row - 1); i >= 0; i--) {
-               for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getCoordinates().setY(coordinates.getY() + ((4 - i) * sprite_size.getY()) + ((4 - i) * 3));
-                    aliens[i][j].drawMove();
-               }
+    public int firstLiveColumn() {
+        int r = -1;
+        firstLiveColumn:
+        for (int j = 0; j < quantity_columns; j++) {
+            for (int i = 0; i < quantity_row ; i++) {
+                if(aliens[i][j].getIsAlive()) {
+                    r = j;
+                    break firstLiveColumn;
+                }
+            }
          }
+        return r;
+    }
+    
+    public int firstLiveRow() {
+        int r = -1;
+        firstLiveRow:
+        for (int i = 0; i < quantity_row; i++) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if (aliens[i][j].getIsAlive()) {
+                    r = i;
+                    break firstLiveRow;
+                }
+            }
+        }
+        return r;
+    }
+    
+    
+    public int lastLiveColumn() {
+        int r = -1;
+        lastLiveColumn:
+        for (int j = (quantity_columns - 1); j >= 0; j--) {
+            for (int i = 0; i < quantity_row; i++) {
+                if (aliens[i][j].getIsAlive()) {
+                    r = j;
+                    break lastLiveColumn;
+                }
+            }
+        }
+        return r;
+    }
+    
+        public int lastLiveRow() {
+        int r = -1;
+        lastLiveRow:
+        for (int i = (quantity_row - 1); i >= 0; i--) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if (aliens[i][j].getIsAlive()) {
+                    r = i;
+                    break lastLiveRow;
+                }
+            }
+        }
+        return r;
     }
 }

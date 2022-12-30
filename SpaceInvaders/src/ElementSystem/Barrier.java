@@ -1,6 +1,6 @@
 package ElementSystem;
 
-import java.util.*;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * 
@@ -9,47 +9,65 @@ public class Barrier extends Static {
     /**
      * 
      */
-    private int height;
+    private final int height;
     
     /**
      * 
      */
-    private int width;
+    private final int width;
     
     /**
      * 
      */
-    private char[ ][ ] area;
+    private int[ ][ ] area;
     
-    Sprite sprite;
-
+    private Brick[][] barrier;
+    
+    /**
+     * Sprite size (width, height).
+     */
+    private Coordinates sprites_size;
+    
     /**
      * Default constructor
      * 
-     * @param height 
-     * @param width 
-     * @param x 
-     * @param y
+     * @param initial
      */
-    public Barrier(int height, int width, int x, int y) {
-        super(x, y);
-        this.sprite = new Sprite("sprites/barrera.png");
-        this.height = height;
-        this.width = width;
+    public Barrier(Coordinates initial, Coordinates sprites_size) {
+        super(initial);
+        height = 3;
+        width = 3;
+
+        this.sprites_size = sprites_size;
+        
+        barrier = new Brick[height][width];
+        int type = 0;
+        for (int j = 0; j< height; j++) {
+            for (int i = 0; i < width; i++) {
+                type++;
+                barrier[j][i] = new Brick(type, new Coordinates((initial.getX() + (sprites_size.getX() * i)), (initial.getY() + (sprites_size.getY() * j))));
+            }
+        }
     }
 
     /**
      * 
      * 
-     * @param line
-     * @param x_coordinate
+     * @param main
      */
-    public void draw(int line, double x_coordinate) {
-        for(int j = 0; j < x_coordinate; j++) {
-            System.out.print(' ');
+    public void draw(AnchorPane main) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                barrier[j][i].draw(main);
+            }
         }
-        for (int j = 0; j < height; j++) {
-            System.out.print(area[line][j]);
+    }
+    
+    public void destructor(AnchorPane main) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                barrier[j][i].destructor(main);
+            }
         }
     }
     
@@ -67,15 +85,5 @@ public class Barrier extends Static {
      */
     public int getWidth() {
         return width;
-    }
-
-    /**
-     * 
-     * 
-     * @param x 
-     * @param y
-     */
-    public void removePiece(int x, int y) {
-
     }
 }

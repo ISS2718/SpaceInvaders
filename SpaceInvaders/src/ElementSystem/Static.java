@@ -1,7 +1,5 @@
 package ElementSystem;
 
-import java.util.*;
-
 /**
  * 
  */
@@ -10,7 +8,7 @@ public class Static {
     /**
      * 
      */
-    private final Coordinates coordinates;
+    protected final Coordinates coordinates;
 
     /**
      * Default constructor.
@@ -20,6 +18,15 @@ public class Static {
      */
     public Static(int x, int y) {
         coordinates = new Coordinates(x, y);
+    }
+    
+        /**
+     * Default constructor.
+     * 
+     * @param coordinates
+     */
+    public Static(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
     
     public Coordinates getCoordinates() {

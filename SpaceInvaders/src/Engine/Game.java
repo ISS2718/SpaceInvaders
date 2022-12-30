@@ -14,12 +14,17 @@ public class Game {
     /**
      * 
      */
-    private Barrier[] barriers;
+    private Barriers barriers;
 
     /**
      * 
      */
     private Cannon cannon;
+    
+    /**
+     *
+     */
+    boolean have_spaceShip;
 
     /**
      * 
@@ -30,11 +35,6 @@ public class Game {
      * 
      */
     private Spaceship spaceShip;
-    
-    /**
-     * 
-     */
-     boolean have_spaceShip;
     
     /**
      * 
@@ -50,6 +50,7 @@ public class Game {
         cannon = new Cannon(20, screen.getSize());
         player = new Player(5);
         have_spaceShip = false;
+        barriers = new Barriers(3, new Coordinates(30, 400));
     }
     
     public void checkColision() {
@@ -72,7 +73,7 @@ public class Game {
      * 
      * @return
      */
-    public Barrier[] getBarrier() {
+    public Barriers getBarriers() {
         return barriers;
     }
 

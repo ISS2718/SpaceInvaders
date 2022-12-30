@@ -20,7 +20,7 @@ private ImageView sprite;
    /**
     * Default constructor.
     * 
-    * @param character 
+     * @param path_image
     */
    public Sprite(String path_image) {
        try {
@@ -29,7 +29,21 @@ private ImageView sprite;
             e.printStackTrace();
             System.out.println("AAAAAAAAAAAAAAAAAAA:" + e.getMessage());
         }
-   } 
+   }
+   
+      /**
+    * Default constructor.
+    * 
+     * @param image
+    */
+   public Sprite(Image image) {
+       try {
+                this.sprite = new ImageView(image);
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.out.println("AAAAAAAAAAAAAAAAAAA:" + e.getMessage());
+        }
+   }
    
    public ImageView getImageView() {
        return sprite;

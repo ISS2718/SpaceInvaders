@@ -127,7 +127,7 @@ public class AliensMatrix extends Move {
        public void destructor(AnchorPane main) {
             for (int i = (quantity_row - 1); i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
-                    main.getChildren().remove(aliens[i][j].getSprite().getImageView());
+                    aliens[i][j].destructor(main);
                 }
             }
         }   

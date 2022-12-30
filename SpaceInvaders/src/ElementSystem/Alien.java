@@ -71,6 +71,10 @@ public class Alien extends Move {
         sprite.getImageView().setY(coordinates.getY());
     }
     
+     public void destructor(AnchorPane main) {
+         main.getChildren().remove(sprite.getImageView());
+     }
+    
     /**
      * 
      * @return 

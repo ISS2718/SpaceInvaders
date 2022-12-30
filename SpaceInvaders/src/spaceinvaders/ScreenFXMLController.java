@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -80,6 +81,7 @@ public class ScreenFXMLController implements Initializable {
         timer.stop();
         g.getCannon().destructor(main);
         g.getAliensMatrix().destructor(main);
+        g.getBarriers().destructor(main);
         menuEnable();
         onMenu = true;
     }
@@ -126,6 +128,7 @@ public class ScreenFXMLController implements Initializable {
             System.exit(1);
         }
         */
+        
         menuDisable();
         onMenu = false;
         
@@ -133,6 +136,7 @@ public class ScreenFXMLController implements Initializable {
         
         g.getCannon().draw(main);
         g.getAliensMatrix().draw(main);
+        g.getBarriers().draw(main);
         
         timer.start();
     }

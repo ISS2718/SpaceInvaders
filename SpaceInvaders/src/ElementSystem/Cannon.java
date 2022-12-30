@@ -26,7 +26,7 @@ public class Cannon extends Move {
      */
     public Cannon(double speed, Coordinates size) {
         super(size.getX()/2, size.getY(), speed, size);
-        this.bullet = new Bullet(1.5, size, true);
+        this.bullet = new Bullet(2, size, true);
         sprite = new Sprite("sprites/canhao.png");
     }
 

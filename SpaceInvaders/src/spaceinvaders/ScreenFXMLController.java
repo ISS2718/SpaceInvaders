@@ -45,19 +45,32 @@ public class ScreenFXMLController implements Initializable {
     private AnimationTimer timer;
     
     @FXML
-    private AnchorPane main;
+    private AnchorPane pane_jogo;
     
     @FXML
     private ImageView menu;
-      
+     
+    @FXML
+    private AnchorPane main;
+    
     @FXML
     private Label coppy_right;
-        
+       
     @FXML
     private Button b_Start;
 
     @FXML
     private Button b_Tutorial;
+    
+    
+    @FXML
+    private Label label_score;
+
+    @FXML
+    private Label life;
+    
+    @FXML
+    private Label text_score;
     
     public void menuEnable() {
         menu.setVisible(true);
@@ -79,9 +92,10 @@ public class ScreenFXMLController implements Initializable {
     
     public void menuReturn() {
         timer.stop();
-        g.getCannon().destructor(main);
-        g.getAliensMatrix().destructor(main);
-        g.getBarriers().destructor(main);
+        g.getCannon().destructor(pane_jogo);
+        g.getAliensMatrix().destructor(pane_jogo);
+        g.getBarriers().destructor(pane_jogo);
+        g.getPlayer().destructor(main);
         menuEnable();
         onMenu = true;
     }
@@ -132,11 +146,14 @@ public class ScreenFXMLController implements Initializable {
         menuDisable();
         onMenu = false;
         
-        g = new Game(main.getPrefWidth(), main.getPrefHeight());
         
-        g.getCannon().draw(main);
-        g.getAliensMatrix().draw(main);
-        g.getBarriers().draw(main);
+        
+        g = new Game(pane_jogo.getPrefWidth(), pane_jogo.getPrefHeight(), life, label_score, text_score);
+        
+        g.getCannon().draw(pane_jogo);
+        g.getAliensMatrix().draw(pane_jogo);
+        g.getBarriers().draw(pane_jogo);
+        g.getPlayer().draw(main);
         
         timer.start();
     }

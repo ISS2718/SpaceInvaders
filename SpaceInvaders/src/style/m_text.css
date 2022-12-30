@@ -1,0 +1,7 @@
+.text {
+    -fx-font: "Arial Black";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}

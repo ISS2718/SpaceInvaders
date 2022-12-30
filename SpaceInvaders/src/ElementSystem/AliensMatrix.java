@@ -28,6 +28,8 @@ public class AliensMatrix extends Move {
      */
     private Alien[][] aliens;
     
+    private double aliens_spacing;
+
     /**
      * Variable to define the direction of moviment of the aliens matrix.
      * If right_move its true the aliens matrix move to the right, but 
@@ -62,8 +64,8 @@ public class AliensMatrix extends Move {
      * @param quantity_columns Quantity of columns in the aliens matrix.
      * @param size Dimensions of the game display screen
      */
-    public AliensMatrix(int quantity_columns, double speed, Coordinates size) {
-       super(0, 290, speed, size);
+    public AliensMatrix(int quantity_columns, double aliens_spacing, double speed, Coordinates size) {
+       super(0,  50, speed, size);
        this.quantity_columns = quantity_columns;
        aliens = new Alien[5][this.quantity_columns];
        for (int i = 0; i < this.quantity_columns; i++) {
@@ -74,6 +76,7 @@ public class AliensMatrix extends Move {
            aliens[4][i] = new Alien(3, speed,  size);
        }
        sprite_size = new Coordinates(aliens[0][0].getSprite().getImageView().getImage().getWidth(), aliens[0][0].getSprite().getImageView().getImage().getHeight());
+       this.aliens_spacing = aliens_spacing;
     }
     
     public void checkColisionWithBarrier(Barriers barriers) {
@@ -112,8 +115,8 @@ public class AliensMatrix extends Move {
        public void draw(AnchorPane main) {
            for (int i = (quantity_row - 1); i >= 0; i--) {
                 for (int j = 0; j < quantity_columns; j++) {
-                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                    aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * 3));
+                    aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (aliens_spacing * j));
+                    aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * aliens_spacing));
                     aliens[i][j].draw(main);
                 }
             }
@@ -122,8 +125,8 @@ public class AliensMatrix extends Move {
        public void drawMove() {
             for (int i = (quantity_row - 1); i >= 0; i--) {
                for (int j = 0; j < quantity_columns; j++) {
-                   aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (3 * j));
-                   aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * 3));
+                   aliens[i][j].getCoordinates().setX(coordinates.getX() + (j * sprite_size.getX()) + (aliens_spacing * j));
+                   aliens[i][j].getCoordinates().setY(coordinates.getY() + (((quantity_row - 1) - i) * sprite_size.getY()) + (((quantity_row - 1) - i) * aliens_spacing));
                    aliens[i][j].drawMove();
                }
            }
@@ -150,9 +153,9 @@ public class AliensMatrix extends Move {
         double leftt_speed = speed;
         
         
-        double min_height_AliensMatrix = (screen_size.getY() - ((quantity_row * sprite_size.getY()) + (quantity_row * 3)) + ((firstLiveRowAlienMatrix* sprite_size.getY()) + (firstLiveRowAlienMatrix * 3)));
-        double origin_point_AliensMatrix =  (-1 * ((firstLiveColumnAlienMatrix * 32) + ((firstLiveColumnAlienMatrix) * 3))) + (2 * (firstLiveColumnAlienMatrix + 1));
-        double target_point_AliensMatrix = (screen_size.getX() - ((lastLiveColumnAlienMatrix - 2) * 3)) - ((lastLiveColumnAlienMatrix + 1) * sprite_size.getX());
+        double min_height_AliensMatrix = (screen_size.getY() - ((quantity_row  * sprite_size.getY()) + ((quantity_row - 1) * aliens_spacing)) + firstLiveRowAlienMatrix* sprite_size.getY());
+        double origin_point_AliensMatrix =  (-1 * ((firstLiveColumnAlienMatrix * sprite_size.getX()) + ((firstLiveColumnAlienMatrix) * aliens_spacing))) + (2 * (firstLiveColumnAlienMatrix + 1));
+        double target_point_AliensMatrix = (screen_size.getX() - ((lastLiveColumnAlienMatrix) * aliens_spacing)) - ((lastLiveColumnAlienMatrix + 1.1) * sprite_size.getX());
         
         if(right_move == true) {
             if(coordinates.getX() < target_point_AliensMatrix) {

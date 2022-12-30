@@ -63,7 +63,7 @@ public class Bullet extends Move {
         setInitialPosition();
         
         main.getChildren().add(sprite.getImageView());
-        //sprite.getImageView().setVisible(false);
+        sprite.getImageView().setVisible(false);
     }
     
     public void drawMove() { 

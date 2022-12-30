@@ -50,7 +50,7 @@ public class Alien extends Move {
      * @param type type of alien (1, 2 or 3). Dwfault is type 1.
      */
     public Alien(int type,  double speed, Coordinates size) {
-        super(0.0, 0.0, speed, size);
+        super(0, 0, speed, size);
         this.type = type;
         setTypeSprite();
         bullet = new Bullet(1.0, size, false);
@@ -58,14 +58,24 @@ public class Alien extends Move {
     }
     
     public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+        double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
+        double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());
+        double left_limit = coordinates.getX();
+        double rigth_limit = (coordinates.getX() + sprite.getImageView().getImage().getWidth());
+
+        double lower_limit_for_check = (coordinates_for_check.getY() + sprite_for_check.getImageView().getImage().getHeight());
+        double upper_limit_for_check = (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight());
+        double left_limit_for_check = coordinates_for_check.getX();
+        double rigth_limit_for_check = (coordinates_for_check.getX() + sprite_for_check.getImageView().getImage().getWidth());
+
         boolean r = false;
         if (isAlive) {
-            if (((coordinates.getY()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
-                    && (coordinates.getY() + sprite.getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+            if (((upper_limit <= upper_limit_for_check) && (coordinates.getY() >= upper_limit_for_check))
+                    || ((coordinates.getY() <= lower_limit_for_check) && (lower_limit >= lower_limit_for_check))) {
 
-                if (((coordinates.getX()) <= coordinates_for_check.getX())
-                        && (coordinates.getX() + sprite.getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
-                    System.out.println(coordinates.getX() +  ", " + coordinates.getY());
+                if (((left_limit <= left_limit_for_check) && (rigth_limit >= left_limit_for_check))
+                        || ((left_limit <= rigth_limit_for_check) && (rigth_limit >= rigth_limit_for_check))) {
+
                     setDead();
                     r = true;
                 }

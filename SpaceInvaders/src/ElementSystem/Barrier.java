@@ -49,7 +49,7 @@ public class Barrier extends Static {
         boolean r = false;
         colisionCheck:
         for (int i = 0; i < width; i++) {
-            for (int j = 0; j< height; j++) {
+            for (int j = 0; j < height; j++) {
                 r = barrier[j][i].checkColision(coordinates_for_check, sprite_for_check);
                 if (r == true) {
                     break colisionCheck;

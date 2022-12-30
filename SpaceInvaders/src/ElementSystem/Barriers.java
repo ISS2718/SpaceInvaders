@@ -40,8 +40,7 @@ public class Barriers extends Static {
         }
     }
     
-    
-        public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
         boolean r = false;
         for (int i = 0; i < quantity_barriers; i++) {
             r = barriers[i].checkColision(coordinates_for_check, sprite_for_check);
@@ -72,6 +71,10 @@ public class Barriers extends Static {
         for (int i = 0; i < quantity_barriers; i++) {
             barriers[i].destructor(main);
         }
+    }
+    
+    public int getQuantityBarriers() {
+        return quantity_barriers;
     }
     
 }

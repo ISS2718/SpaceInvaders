@@ -33,13 +33,24 @@ public class Brick extends Static {
     }
     
     public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+        double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
+        double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());
+        double left_limit = coordinates.getX();
+        double rigth_limit = (coordinates.getX() + sprite.getImageView().getImage().getWidth());
+        
+        double lower_limit_for_check = (coordinates_for_check.getY() + sprite_for_check.getImageView().getImage().getHeight());
+        double upper_limit_for_check = (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight());
+        double left_limit_for_check = coordinates_for_check.getX();
+        double rigth_limit_for_check = (coordinates_for_check.getX() + sprite_for_check.getImageView().getImage().getWidth());
+
+
         boolean r = false;
         if (life > 0) {
-            if (((coordinates.getY() - sprite.getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
-                    && (coordinates.getY()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+            if (((upper_limit <= upper_limit_for_check) && (coordinates.getY() >= upper_limit_for_check)) 
+                    || ((coordinates.getY() <= lower_limit_for_check) && (lower_limit >= lower_limit_for_check))) {
 
-                if (((coordinates.getX()) <= coordinates_for_check.getX())
-                        && (coordinates.getX() + sprite.getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                if (((left_limit <= left_limit_for_check) && (rigth_limit >= left_limit_for_check)) 
+                        || ((left_limit <= rigth_limit_for_check) && (rigth_limit >= rigth_limit_for_check))) {
                     
                     decreasesLife();
                     r = true;
@@ -94,63 +105,63 @@ public class Brick extends Static {
         switch (type) {
             case 1:
                 full_barrier = new Image("sprites/barrera1.png");
-                three_quarters_barrier = new Image("sprites/barrera1.png");
-                half_barrier = new Image("sprites/barrera1.png");
-                one_quarter_barrier = new Image("sprites/barrera1.png");
+                three_quarters_barrier = new Image("sprites/barrera1_Q2.png");
+                half_barrier = new Image("sprites/barrera1_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera1_Q4.png");
                 break;
             case 2:
                 full_barrier = new Image("sprites/barrera2.png");
-                three_quarters_barrier = new Image("sprites/barrera2.png");
-                half_barrier = new Image("sprites/barrera2.png");
-                one_quarter_barrier = new Image("sprites/barrera2.png");
+                three_quarters_barrier = new Image("sprites/barrera2_Q2.png");
+                half_barrier = new Image("sprites/barrera2_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera2_Q4.png");
                 break;
             case 3:
                 full_barrier = new Image("sprites/barrera3.png");
-                three_quarters_barrier = new Image("sprites/barrera3.png");
-                half_barrier = new Image("sprites/barrera3.png");
-                one_quarter_barrier = new Image("sprites/barrera3.png");
+                three_quarters_barrier = new Image("sprites/barrera3_Q2.png");
+                half_barrier = new Image("sprites/barrera3_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera3_Q4.png");
                 break;
             case 4:
                 full_barrier = new Image("sprites/barrera4_5_6.png");
-                three_quarters_barrier = new Image("sprites/barrera4_5_6.png");
-                half_barrier = new Image("sprites/barrera4_5_6.png");
-                one_quarter_barrier = new Image("sprites/barrera4_5_6.png");
+                three_quarters_barrier = new Image("sprites/barrera4_5_6_Q2.png");
+                half_barrier = new Image("sprites/barrera4_5_6_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera4_5_6_Q4.png");
                 break;
             case 5:
                 full_barrier = new Image("sprites/barrera4_5_6.png");
-                three_quarters_barrier = new Image("sprites/barrera4_5_6.png");
-                half_barrier = new Image("sprites/barrera4_5_6.png");
-                one_quarter_barrier = new Image("sprites/barrera4_5_6.png");
+                three_quarters_barrier = new Image("sprites/barrera4_5_6_Q2.png");
+                half_barrier = new Image("sprites/barrera4_5_6_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera4_5_6_Q4.png");
                 break;
             case 6:
                 full_barrier = new Image("sprites/barrera4_5_6.png");
-                three_quarters_barrier = new Image("sprites/barrera4_5_6.png");
-                half_barrier = new Image("sprites/barrera4_5_6.png");
-                one_quarter_barrier = new Image("sprites/barrera4_5_6.png");
+                three_quarters_barrier = new Image("sprites/barrera4_5_6_Q2.png");
+                half_barrier = new Image("sprites/barrera4_5_6_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera4_5_6_Q4.png");
                 break;
             case 7:
                 full_barrier = new Image("sprites/barrera7.png");
-                three_quarters_barrier = new Image("sprites/barrera7.png");
-                half_barrier = new Image("sprites/barrera7.png");
-                one_quarter_barrier = new Image("sprites/barrera7.png");
+                three_quarters_barrier = new Image("sprites/barrera7_Q2.png");
+                half_barrier = new Image("sprites/barrera7_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera7_Q4.png");
                 break;
             case 8:
                 full_barrier = new Image("sprites/barrera8.png");
-                three_quarters_barrier = new Image("sprites/barrera8.png");
-                half_barrier = new Image("sprites/barrera8.png");
-                one_quarter_barrier = new Image("sprites/barrera8.png");
+                three_quarters_barrier = new Image("sprites/barrera8_Q2.png");
+                half_barrier = new Image("sprites/barrera8_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera8_Q4.png");
                 break;
             case 9:
                 full_barrier = new Image("sprites/barrera9.png");
-                three_quarters_barrier = new Image("sprites/barrera9.png");
-                half_barrier = new Image("sprites/barrera9.png");
-                one_quarter_barrier = new Image("sprites/barrera9.png");
+                three_quarters_barrier = new Image("sprites/barrera9_Q2.png");
+                half_barrier = new Image("sprites/barrera9_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera9_Q4.png");
                 break;
             default:
                 full_barrier = new Image("sprites/barrera1.png");
-                three_quarters_barrier = new Image("sprites/barrera1.png");
-                half_barrier = new Image("sprites/barrera1.png");
-                one_quarter_barrier = new Image("sprites/barrera1.png");
+                three_quarters_barrier = new Image("sprites/barrera1_Q2.png");
+                half_barrier = new Image("sprites/barrera1_Q3.png");
+                one_quarter_barrier = new Image("sprites/barrera1_Q4.png");
                 break;
         }
     }

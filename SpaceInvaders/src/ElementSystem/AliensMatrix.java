@@ -63,7 +63,7 @@ public class AliensMatrix extends Move {
      * @param size Dimensions of the game display screen
      */
     public AliensMatrix(int quantity_columns, double speed, Coordinates size) {
-       super(0, 0, speed, size);
+       super(0, 290, speed, size);
        this.quantity_columns = quantity_columns;
        aliens = new Alien[5][this.quantity_columns];
        for (int i = 0; i < this.quantity_columns; i++) {
@@ -76,7 +76,19 @@ public class AliensMatrix extends Move {
        sprite_size = new Coordinates(aliens[0][0].getSprite().getImageView().getImage().getWidth(), aliens[0][0].getSprite().getImageView().getImage().getHeight());
     }
     
-    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
+    public void checkColisionWithBarrier(Barriers barriers) {
+        for (int i = (quantity_row - 1); i >= 0; i--) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if (aliens[i][j].getIsAlive()) {
+                     if (barriers.checkColision(aliens[i][j].getCoordinates(), aliens[i][j].getSprite())) {
+                         aliens[i][j].setDead();
+                     }
+                }
+            }
+        }
+    }
+    
+    public boolean checkColisionWithBullet(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
         boolean r = false;
         colisionCheck:
         for (int i = (quantity_row - 1); i >= 0; i--) {

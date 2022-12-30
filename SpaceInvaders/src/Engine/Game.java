@@ -54,12 +54,15 @@ public class Game {
     }
     
     public void checkColision() {
+        //colisão dos aliens com as barreiras
+        aliensMatrix.checkColisionWithBarrier(barriers);
+        
+        
+        //colisão do tiro do canhão
         if(cannon.getBullet().getFlagShot()) {
-            if(aliensMatrix.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
-                cannon.getBullet().setShoted();
-            }
-            
             if (barriers.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
+                cannon.getBullet().setShoted();
+            } else if(aliensMatrix.checkColisionWithBullet(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
                 cannon.getBullet().setShoted();
             }
         }

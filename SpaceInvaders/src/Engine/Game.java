@@ -50,12 +50,16 @@ public class Game {
         cannon = new Cannon(20, screen.getSize());
         player = new Player(5);
         have_spaceShip = false;
-        barriers = new Barriers(3, new Coordinates(30, 400));
+        barriers = new Barriers(3, screen.getSize());
     }
     
     public void checkColision() {
         if(cannon.getBullet().getFlagShot()) {
             if(aliensMatrix.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
+                cannon.getBullet().setShoted();
+            }
+            
+            if (barriers.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
                 cannon.getBullet().setShoted();
             }
         }

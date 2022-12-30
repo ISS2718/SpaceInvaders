@@ -57,6 +57,23 @@ public class Alien extends Move {
         isAlive = true;
     }
     
+    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+        boolean r = false;
+        if (isAlive) {
+            if (((coordinates.getY()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
+                    && (coordinates.getY() + sprite.getImageView().getImage().getHeight()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+
+                if (((coordinates.getX()) <= coordinates_for_check.getX())
+                        && (coordinates.getX() + sprite.getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                    System.out.println(coordinates.getX() +  ", " + coordinates.getY());
+                    setDead();
+                    r = true;
+                }
+            }
+        }
+        return r;
+    }
+    
     public void draw(AnchorPane main) {
         sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);

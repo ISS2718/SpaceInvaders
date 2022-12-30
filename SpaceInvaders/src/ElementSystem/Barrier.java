@@ -16,11 +16,6 @@ public class Barrier extends Static {
      */
     private final int width;
     
-    /**
-     * 
-     */
-    private int[ ][ ] area;
-    
     private Brick[][] barrier;
     
     /**
@@ -50,6 +45,20 @@ public class Barrier extends Static {
         }
     }
 
+    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+        boolean r = false;
+        colisionCheck:
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j< height; j++) {
+                r = barrier[j][i].checkColision(coordinates_for_check, sprite_for_check);
+                if (r == true) {
+                    break colisionCheck;
+                }
+            }
+        }
+        return r;
+    }
+    
     /**
      * 
      * 

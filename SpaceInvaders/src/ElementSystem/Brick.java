@@ -32,6 +32,23 @@ public class Brick extends Static {
         sprite = new Sprite(full_barrier);
     }
     
+    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+        boolean r = false;
+        if (life > 0) {
+            if (((coordinates.getY() - sprite.getImageView().getImage().getHeight()) <= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight()))
+                    && (coordinates.getY()) >= (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight())) {
+
+                if (((coordinates.getX()) <= coordinates_for_check.getX())
+                        && (coordinates.getX() + sprite.getImageView().getImage().getWidth()) >= coordinates_for_check.getX()) {
+                    
+                    decreasesLife();
+                    r = true;
+                }
+            }
+        }
+        return r;
+    }
+    
     /**
      *
      *

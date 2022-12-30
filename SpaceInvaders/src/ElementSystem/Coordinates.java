@@ -1,6 +1,5 @@
 package ElementSystem;
 
-import java.util.*;
 
 /**
  * 

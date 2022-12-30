@@ -27,7 +27,7 @@ public class Barriers extends Static {
         super(size);
         
         Brick brick =  new Brick(1, new Coordinates(0, 0));
-        sprites_size = new Coordinates(brick.getSprite().getImageView().getImage().getWidth(), brick.getSprite().getImageView().getImage().getHeight());
+        sprites_size = brick.getSpriteSize();
         
         barrier_size = new Coordinates((sprites_size.getX() * 3), (sprites_size.getY() * 3));
         

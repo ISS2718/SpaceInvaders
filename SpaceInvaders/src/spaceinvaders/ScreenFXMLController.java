@@ -9,23 +9,17 @@ import Engine.Game;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 
 /**
@@ -37,12 +31,6 @@ public class ScreenFXMLController implements Initializable {
     private Game g;
     
     private boolean onMenu;
-    
-    private boolean pressedLEFT;
-    private boolean pressedRIGHT;
-    private boolean pressedSPACE;
-    
-    private AnimationTimer timer;
     
     @FXML
     private AnchorPane pane_jogo;
@@ -91,106 +79,27 @@ public class ScreenFXMLController implements Initializable {
     }
     
     public void menuReturn() {
-        timer.stop();
-        g.getCannon().destructor(pane_jogo);
-        g.getAliensMatrix().destructor(pane_jogo);
-        g.getBarriers().destructor(pane_jogo);
-        g.getPlayer().destructor(main);
+        g.gameLoopStop();
+        g.destructor(main, pane_jogo);
         menuEnable();
         onMenu = true;
     }
     
-    public void start() {
-        /*
-        try {
-            // carrega FXML e monta cena
-            Parent root = FXMLLoader.load(getClass().getResource("StartFXML.fxml"));
-            Scene scene = new Scene(root);
-            
-            scene.setOnKeyPressed(new EventHandler<KeyEvent> () {
-               @Override
-               public void handle(KeyEvent event) {
-                   System.out.println(event.getCode());
-                   switch (event.getCode()) {
-                       case LEFT:
-                       case KP_LEFT:
-                           System.out.println("to the left");
-                           break;
-                       case RIGHT:
-                       case KP_RIGHT:
-                           System.out.println("to the right");
-                           break;
-                       case SPACE:
-                           System.out.println("SPACEEEEEEEEEEE");
-                           break;
-                        case ESCAPE:
-                           System.out.println("ESCAPEEEEEEEEEE");
-                           menuReturn();
-                           break;
-                       default:
-                           break;
-                   }
-               }
-           });
-
-            // troca a cena: de login para principal
-            stage.setTitle("Space Invaders");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        }
-        */
-        
+    public void start() {       
         menuDisable();
         onMenu = false;
-        
-        
-        
+
         g = new Game(pane_jogo.getPrefWidth(), pane_jogo.getPrefHeight(), life, label_score, text_score);
         
-        g.getCannon().draw(pane_jogo);
-        g.getAliensMatrix().draw(pane_jogo);
-        g.getBarriers().draw(pane_jogo);
-        g.getPlayer().draw(main);
+        g.draw(main, pane_jogo);
         
-        timer.start();
+        g.gameLoopStart();
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        pressedLEFT = false;
-        pressedRIGHT = false;
-        pressedSPACE = false;
-        
         onMenu = true;
-        
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                g.getAliensMatrix().move();
-                g.checkColision();
-                
-                if(pressedLEFT) {
-                    g.getCannon().moveLeft();
-                    pressedLEFT = false;
-                }
-                
-                if (pressedRIGHT) {
-                    g.getCannon().moveRight();
-                    pressedRIGHT = false;
-                }
-                
-                if (pressedSPACE) {
-                    g.getCannon().getBullet().shot(g.getCannon().getCoordinates(), g.getCannon().getSprite());
-                    if(g.getCannon().getBullet().getFlagShot() == false) {
-                        pressedSPACE = false;
-                    }
-                }
-            }
-        };
     }    
     
     public void  setupKeyListner(Scene scene) {
@@ -199,18 +108,18 @@ public class ScreenFXMLController implements Initializable {
                 case LEFT:
                 case KP_LEFT:
                     if(!onMenu) {
-                        pressedLEFT = true;
+                        g.setPressedLEFT();
                     }
                     break;
                 case RIGHT:
                 case KP_RIGHT:
                     if(!onMenu) {
-                        pressedRIGHT = true;
+                        g.setPressedRIGHT();
                     }
                     break;
                 case SPACE:
                     if(!onMenu) {
-                        pressedSPACE = true;
+                        g.setPressedSPACE();
                     }
                     break;
                 case ESCAPE:

@@ -1,8 +1,5 @@
 package ElementSystem;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -91,14 +88,14 @@ public class AliensMatrix extends Move {
         }
     }
     
-    public boolean checkColisionWithBullet(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
-        boolean r = false;
+    public int checkColisionWithBullet(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
+        int r = 0;
         colisionCheck:
         for (int i = (quantity_row - 1); i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
                 if(aliens[i][j].getIsAlive()) {
                     r = aliens[i][j].checkColision(coordinates_for_check, sprite_for_check);
-                    if (r == true) {
+                    if (r != 0) {
                         break colisionCheck;
                     }
                 }
@@ -143,7 +140,9 @@ public class AliensMatrix extends Move {
     /**
      * 
      */
-    public void move() {
+    public boolean move() {
+        boolean r = false;
+
         int firstLiveColumnAlienMatrix = firstLiveColumn();
         int lastLiveColumnAlienMatrix = lastLiveColumn();
         int firstLiveRowAlienMatrix = firstLiveRow();
@@ -168,7 +167,7 @@ public class AliensMatrix extends Move {
             }
         } else if(coordinates.getX() >= origin_point_AliensMatrix) {
             if(((coordinates.getX()) -  leftt_speed == origin_point_AliensMatrix) || (coordinates.getX() == origin_point_AliensMatrix)) {
-                if((coordinates.getY()) <min_height_AliensMatrix)  {
+                if((coordinates.getY()) < min_height_AliensMatrix)  {
                     coordinates.setY(coordinates.getY() + sprite_size.getY()/3);
                 }
                 right_move = true;
@@ -179,6 +178,12 @@ public class AliensMatrix extends Move {
             }
         }
         drawMove();
+
+        if(coordinates.getY() >= min_height_AliensMatrix) {
+            r = true;
+        }
+
+        return r;
     }
 
     public int getcolumns() {

@@ -1,7 +1,5 @@
 package ElementSystem;
 
-import java.util.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 /**

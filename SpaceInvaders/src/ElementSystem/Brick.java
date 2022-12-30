@@ -21,6 +21,8 @@ public class Brick extends Static {
     private int life;
     
     private Sprite sprite;
+
+    Coordinates sprites_size;
     
     private int type;
     
@@ -30,13 +32,14 @@ public class Brick extends Static {
         setTypeSprite();
         life = 4;
         sprite = new Sprite(full_barrier);
+        this.sprites_size = new Coordinates(sprite.getImageView().getImage().getWidth(), sprite.getImageView().getImage().getHeight());
     }
     
     public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
-        double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
-        double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());
+        double lower_limit = (coordinates.getY() + sprites_size.getY());
+        double upper_limit = (coordinates.getY() - sprites_size.getY());
         double left_limit = coordinates.getX();
-        double rigth_limit = (coordinates.getX() + sprite.getImageView().getImage().getWidth());
+        double rigth_limit = (coordinates.getX() + sprites_size.getX());
         
         double lower_limit_for_check = (coordinates_for_check.getY() + sprite_for_check.getImageView().getImage().getHeight());
         double upper_limit_for_check = (coordinates_for_check.getY() - sprite_for_check.getImageView().getImage().getHeight());
@@ -90,6 +93,10 @@ public class Brick extends Static {
     
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public Coordinates getSpriteSize() {
+        return sprites_size;
     }
     
     public void resetLife() {

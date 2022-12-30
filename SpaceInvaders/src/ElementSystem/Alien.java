@@ -57,7 +57,7 @@ public class Alien extends Move {
         isAlive = true;
     }
     
-    public boolean checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
+    public int checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
         double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
         double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());
         double left_limit = coordinates.getX();
@@ -68,7 +68,7 @@ public class Alien extends Move {
         double left_limit_for_check = coordinates_for_check.getX();
         double rigth_limit_for_check = (coordinates_for_check.getX() + sprite_for_check.getImageView().getImage().getWidth());
 
-        boolean r = false;
+        int r = 0;
         if (isAlive) {
             if (((upper_limit <= upper_limit_for_check) && (coordinates.getY() >= upper_limit_for_check))
                     || ((coordinates.getY() <= lower_limit_for_check) && (lower_limit >= lower_limit_for_check))) {
@@ -77,7 +77,7 @@ public class Alien extends Move {
                         || ((left_limit <= rigth_limit_for_check) && (rigth_limit >= rigth_limit_for_check))) {
 
                     setDead();
-                    r = true;
+                    r = getPointWithKill();
                 }
             }
         }
@@ -114,6 +114,34 @@ public class Alien extends Move {
         return isAlive;
     }
 
+    public int getPointWithKill() {
+        int r = 0;
+        switch(type) {
+            case 1:
+                r = 100;
+                break;
+            case 2:
+                r = 150;
+                break;
+            case 3:
+                r = 200;
+                break;
+            default:
+                r = 100;
+                break;
+        }
+        return r;
+    }
+
+    /**
+     * Get the alien sprite and return to user.
+     * 
+     * @return sprite of alien.
+     */
+    public Sprite getSprite() {
+        return sprite;
+    }
+
     public void setAlive() {
         isAlive = true;
         sprite.getImageView().setVisible(true);
@@ -122,15 +150,6 @@ public class Alien extends Move {
     public void setDead() {
         isAlive = false;
         sprite.getImageView().setVisible(false);
-    }
-    
-    /**
-     * Get the alien sprite and return to user.
-     * 
-     * @return sprite of alien.
-     */
-    public Sprite getSprite() {
-        return sprite;
     }
 
     /**

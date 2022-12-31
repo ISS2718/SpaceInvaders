@@ -93,12 +93,13 @@ public class Game {
         this.game_pane = game_pane;
         screen = new Screen(game_pane.getWidth(), game_pane.getHeight());
         aliensMatrix_level = 1;
-        aliensMatrix = new AliensMatrix(11,  15, 0.3, 2, aliensMatrix_level, screen.getSize());
+        aliensMatrix = new AliensMatrix(11,  15, 0.25, 2, aliensMatrix_level, screen.getSize());
         cannon = new Cannon(15, 2, screen.getSize());
         player = new Player(3, 3, label_life, label_score, text_score);
         have_spaceShip = false;
         barriers = new Barriers(3, screen.getSize());
-        
+        spaceShip = new Spaceship(screen.getSize());
+                
         gameOverType = 0;
 
         pressedLEFT = false;
@@ -112,6 +113,10 @@ public class Game {
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                
+                spaceShip.randomAppears();
+                spaceShip.move();
+                
                 if(gameOverType == 0) {
                     checkgameOver(aliensMatrix.move());
                     aliensMatrix.randomShot();
@@ -173,6 +178,9 @@ public class Game {
             } else if((incscore = aliensMatrix.checkColisionWithBullet(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) != 0) {
                 cannon.getBullet().setShoted();
                 player.increasesScore(incscore);
+            } else if ((incscore = spaceShip.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) != 0) {
+                cannon.getBullet().setShoted();
+                player.increasesScore(incscore);
             }
         }
     }
@@ -184,7 +192,7 @@ public class Game {
             } else {
                 aliensMatrix.destructor(game_pane);
                 aliensMatrix_level++;
-                aliensMatrix = new AliensMatrix(11,  15, 0.3, 2, aliensMatrix_level, screen.getSize());
+                aliensMatrix = new AliensMatrix(11,  15, 0.25, 2, aliensMatrix_level, screen.getSize());
                 aliensMatrix.draw(game_pane);
                 rounds--;
             }
@@ -207,6 +215,7 @@ public class Game {
         barriers.destructor(main);
         cannon.destructor(main);
         player.destructor(main);
+        spaceShip.destructor(main);
         gameOverDestructor(main);
     }
 
@@ -215,6 +224,7 @@ public class Game {
         aliensMatrix.draw(main);
         barriers.draw(main);
         player.draw(main);
+        spaceShip.draw(main);
         gameOverSetup(main);
     }
 
@@ -224,6 +234,7 @@ public class Game {
         aliensMatrix.destructor(game_pane);
         barriers.destructor(game_pane);
         player.destructor(main);
+        spaceShip.destructor(game_pane);
         gameOverDestructor(game_pane);
     }
 
@@ -232,6 +243,7 @@ public class Game {
         aliensMatrix.draw(game_pane);
         barriers.draw(game_pane);
         player.draw(main);
+        spaceShip.draw(game_pane);
         gameOverSetup(game_pane);
     }
     

@@ -57,6 +57,12 @@ public class Alien extends Move {
         isAlive = true;
     }
     
+    /**
+     * 
+     * @param coordinates_for_check
+     * @param sprite_for_check
+     * @return 
+     */
     public int checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
         double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
         double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());

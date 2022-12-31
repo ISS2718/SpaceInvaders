@@ -31,34 +31,35 @@ public class ScreenFXMLController implements Initializable {
     private Game g;
     
     private boolean onMenu;
-    
-    @FXML
-    private AnchorPane pane_jogo;
-    
-    @FXML
-    private ImageView menu;
-     
-    @FXML
-    private AnchorPane main;
-    
-    @FXML
-    private Label coppy_right;
-       
+    private boolean onGameOver;
+
     @FXML
     private Button b_Start;
 
     @FXML
     private Button b_Tutorial;
-    
-    
+
+    @FXML
+    private Label coppy_right;
+
     @FXML
     private Label label_score;
 
     @FXML
     private Label life;
-    
+
+    @FXML
+    private AnchorPane main;
+
+    @FXML
+    private ImageView menu;
+
+    @FXML
+    private AnchorPane pane_jogo;
+
     @FXML
     private Label text_score;
+
     
     public void menuEnable() {
         menu.setVisible(true);
@@ -94,12 +95,19 @@ public class ScreenFXMLController implements Initializable {
         g.draw(main, pane_jogo);
         
         g.gameLoopStart();
+        
     }
 
+    public void tutorial() {
+        menuDisable();
+        g = new Game(pane_jogo.getPrefWidth(), pane_jogo.getPrefHeight(), life, label_score, text_score);
+        g.draw(main, pane_jogo);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         onMenu = true;
+        onGameOver = false;
     }    
     
     public void  setupKeyListner(Scene scene) {
@@ -123,7 +131,7 @@ public class ScreenFXMLController implements Initializable {
                     }
                     break;
                 case ESCAPE:
-                    if(!onMenu) {
+                    if(!onMenu || onGameOver) {
                         menuReturn();
                     } else  {
                         System.exit(0);

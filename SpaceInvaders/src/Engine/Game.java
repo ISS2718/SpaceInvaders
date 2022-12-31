@@ -3,12 +3,18 @@ package Engine;
 import ElementSystem.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 /**
  * 
  */
 public class Game {
+    
+    /**
+     * 
+     */
+    private ImageView alieninvasion; 
     
     /**
      * 
@@ -26,7 +32,12 @@ public class Game {
     private Cannon cannon;
     
     private AnimationTimer gameloop;
-
+    
+    /**
+     * 
+     */
+    private ImageView gameover;
+    
     private int gameOverType;
 
     
@@ -47,12 +58,22 @@ public class Game {
     /**
      * 
      */
+    private ImageView saveearth;
+    
+    /**
+     * 
+     */
     private Spaceship spaceShip;
     
     /**
      * 
      */
     private Screen screen;
+    
+    /**
+     * 
+     */ 
+    private ImageView youdied;
 
     /**
      * 
@@ -74,12 +95,12 @@ public class Game {
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if(aliensMatrix.move()) {
-                
-                    
-
+                if(gameOverType == 0) {
+                    checkColision();
+                    checkgameOver(aliensMatrix.move());
+                } else {
+                    aliensMatrix.move();
                 }
-                checkColision();
                 
                 if(pressedLEFT) {
                     cannon.moveLeft();
@@ -99,11 +120,13 @@ public class Game {
                 }
             }
         };
+
+
+
     }
     
     public void checkColision() {
         //collision of the aliens with the barriers
-        checkgameOver(aliensMatrix.move());
         aliensMatrix.checkColisionWithBarrier(barriers);
 
         int incscore = 0;
@@ -120,7 +143,9 @@ public class Game {
     }
 
     public void checkgameOver(boolean aliens_on_Earth) {
-        if(aliens_on_Earth) {
+        if (aliensMatrix.quantityAliensAlived() == 0) {
+            gameOverType = 3;
+        } else if (aliens_on_Earth) {
             gameOverType = 2;
         } else if (player.getLifes() == 0) {
             gameOverType = 1;
@@ -134,10 +159,11 @@ public class Game {
     }
 
     public void destructor(AnchorPane main) {
-        cannon.destructor(main);
         aliensMatrix.destructor(main);
         barriers.destructor(main);
+        cannon.destructor(main);
         player.destructor(main);
+        gameOverDestructor(main);
     }
 
     public void draw(AnchorPane main) {
@@ -145,6 +171,7 @@ public class Game {
         aliensMatrix.draw(main);
         barriers.draw(main);
         player.draw(main);
+        gameOverSetup(main);
     }
 
 
@@ -153,6 +180,7 @@ public class Game {
         aliensMatrix.destructor(pane_jogo);
         barriers.destructor(pane_jogo);
         player.destructor(main);
+        gameOverDestructor(pane_jogo);
     }
 
     public void draw(AnchorPane main, AnchorPane pane_jogo) {
@@ -160,9 +188,10 @@ public class Game {
         aliensMatrix.draw(pane_jogo);
         barriers.draw(pane_jogo);
         player.draw(main);
+        gameOverSetup(pane_jogo);
     }
     
-    public void gameLoopStart() {
+    public void gameLoopStart(){
         gameloop.start();
     }
 
@@ -171,22 +200,56 @@ public class Game {
     }
 
     private void gameOver() {
+        gameover.setVisible(true);
         switch (gameOverType) {
             case 1:
                 //GameOver for Ended Lives
-                System.out.println("You Died!!!");
+                youdied.setVisible(true);
                 break;
             
             case 2:
                 //GameOver for Aliens have arrived on Earth
-                System.out.println("Aliens Arrived Earth!");
+                alieninvasion.setVisible(true);
                 break;
             
             case 3:
                 //GameOver for Win Game (Exterminated all aliens)
-                System.out.println("You exterminate ALL the Aliens!");
+                saveearth.setVisible(true);
                 break;       
         }
+    }
+
+    private void gameOverSetup(AnchorPane main) {
+        alieninvasion = new ImageView("sprites/Aliens_Invaded.png");
+        gameover = new ImageView("sprites/GameOver.png");
+        saveearth = new ImageView("sprites/Save_Earth.png");
+        youdied = new ImageView("sprites/You_Died.png");
+
+        alieninvasion.setLayoutX(0);
+        alieninvasion.setLayoutY(0);
+        gameover.setLayoutX(0);
+        gameover.setLayoutY(0);
+        saveearth.setLayoutX(0);
+        saveearth.setLayoutY(0);
+        youdied.setLayoutX(0);
+        youdied.setLayoutY(0);
+
+        alieninvasion.setVisible(false);
+        gameover.setVisible(false);
+        saveearth.setVisible(false);
+        youdied.setVisible(false);
+
+        main.getChildren().add(alieninvasion);
+        main.getChildren().add(gameover);
+        main.getChildren().add(saveearth);
+        main.getChildren().add(youdied);
+    }
+
+    private void gameOverDestructor(AnchorPane main) {
+        main.getChildren().remove(alieninvasion);
+        main.getChildren().remove(gameover);
+        main.getChildren().remove(saveearth);
+        main.getChildren().remove(youdied);
     }
 
     /**

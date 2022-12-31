@@ -179,10 +179,11 @@ public class AliensMatrix extends Move {
         }
         drawMove();
 
-        if(coordinates.getY() >= min_height_AliensMatrix) {
-            r = true;
+        if (quantityAliensAlived() != 0) {
+            if(coordinates.getY() >= min_height_AliensMatrix) {
+                r = true;
+            }
         }
-
         return r;
     }
 
@@ -248,7 +249,7 @@ public class AliensMatrix extends Move {
         return r;
     }
     
-        public int lastLiveRow() {
+    public int lastLiveRow() {
         int r = -1;
         lastLiveRow:
         for (int i = (quantity_row - 1); i >= 0; i--) {
@@ -256,6 +257,18 @@ public class AliensMatrix extends Move {
                 if (aliens[i][j].getIsAlive()) {
                     r = i;
                     break lastLiveRow;
+                }
+            }
+        }
+        return r;
+    }
+
+    public int quantityAliensAlived() {
+        int r = 0;
+        for (int i = 0; i < quantity_row; i++) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if (aliens[i][j].getIsAlive()) {
+                    r++;
                 }
             }
         }

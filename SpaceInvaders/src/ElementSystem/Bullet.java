@@ -98,14 +98,12 @@ public class Bullet extends Move {
      */
     public void move() {
         if(isCannon) {
-            //System.out.println("Coordenada Y: " + (coordinates.getY() -  sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
             if((coordinates.getY() - sprite.getImageView().getImage().getHeight())  > max_Y_coordinates) {
                 coordinates.setY(coordinates.getY()  -  speed);
             } else {
                 missedShot = true;
             }
         } else {
-            //System.out.println("Coordenada Y: " + (coordinates.getY() + sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
             if ((coordinates.getY() + sprite.getImageView().getImage().getHeight()) < max_Y_coordinates) {
                 
                 coordinates.setY(coordinates.getY() + speed);

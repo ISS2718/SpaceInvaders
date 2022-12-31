@@ -23,12 +23,7 @@ private ImageView sprite;
      * @param path_image
     */
    public Sprite(String path_image) {
-       try {
-                this.sprite = new ImageView(path_image);
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("AAAAAAAAAAAAAAAAAAA:" + e.getMessage());
-        }
+        this.sprite = new ImageView(path_image);
    }
    
       /**
@@ -37,12 +32,7 @@ private ImageView sprite;
      * @param image
     */
    public Sprite(Image image) {
-       try {
-                this.sprite = new ImageView(image);
-        } catch(Exception e) {
-            e.printStackTrace();
-            System.out.println("AAAAAAAAAAAAAAAAAAA:" + e.getMessage());
-        }
+       this.sprite = new ImageView(image);
    }
    
    public ImageView getImageView() {

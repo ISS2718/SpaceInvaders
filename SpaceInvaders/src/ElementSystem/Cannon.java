@@ -8,9 +8,7 @@ import javafx.scene.layout.AnchorPane;
  * @author isaac
  */
 public class Cannon extends Move {
-    /**
-     * 
-     */
+
     private Bullet bullet;
     
    private Image cannon;
@@ -19,18 +17,12 @@ public class Cannon extends Move {
    
    private Image invincible_cannon;
     
-    /**
-     * 
-     */
+
     private Sprite sprite;
 
     private Coordinates sprite_size;
     
-    /**
-     * Default constructor
-     * 
-     * @param speed
-     */
+
     public Cannon(double speed, double bullet_spped, Coordinates size) {
         super(size.getX()/2, size.getY() - 3, speed, size);
         this.bullet = new Bullet(bullet_spped, size, true);
@@ -86,10 +78,6 @@ public class Cannon extends Move {
         sprite.getImageView().setX(coordinates.getX());
     }
 
-    /**
-     *
-     * @return
-     */
     public Bullet getBullet() {
         return bullet;
     }

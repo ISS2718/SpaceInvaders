@@ -2,38 +2,25 @@ package ElementSystem;
 
 import javafx.scene.layout.AnchorPane;
 
-/**
- * 
- */
 public class Bullet extends Move {    
-    /**
-    */ 
+   
     private boolean flagShot;
 
-    /**
-     *
-     */
+
     boolean isCannon;
 
-    /**
-     * 
-     */
+ 
     private double max_Y_coordinates;
     
-    /**
-     */
+ 
     private boolean missedShot;
     
     private boolean shoted;
     
-    /**
-     * 
-     */
+  
     private Sprite sprite;
     
-    /**
-     * Default constructor
-     */
+ 
     public Bullet(double speed, Coordinates size, boolean isCannon) {
         super(0.0, 0.0, speed, size);
         flagShot = false;
@@ -50,11 +37,7 @@ public class Bullet extends Move {
         sprite = new Sprite("sprites/tiro.png");
     }
 
-    /**
-     * 
-     * 
-     * @param x_coordinate
-     */
+
     public void draw(AnchorPane main) {
         sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);
@@ -81,10 +64,7 @@ public class Bullet extends Move {
         }        
     }
     
-    /**
-     * 
-     * @return 
-     */
+
     public boolean getFlagShot() {
         return flagShot;
     }
@@ -93,9 +73,7 @@ public class Bullet extends Move {
         return sprite;
     }
     
-    /**
-     *
-     */
+   
     public void move() {
         if(isCannon) {
             if((coordinates.getY() - sprite.getImageView().getImage().getHeight())  > max_Y_coordinates) {
@@ -129,12 +107,7 @@ public class Bullet extends Move {
         shoted = true;
     }
 
-    /**
-     * 
-     * @param ini_coordinates
-     * @param max_coordinates
-     * @param shoted
-     */
+
     public void shot(Coordinates ini_coordinates, Sprite shoter_sprite) {
         if(flagShot == false) {
             coordinates.setX(ini_coordinates.getX() + shoter_sprite.getImageView().getImage().getWidth()/2);

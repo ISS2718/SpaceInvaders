@@ -13,9 +13,7 @@ import javafx.scene.layout.AnchorPane;
  * @author isaac
  */
 public class Alien extends Move {
-    /**
-     * 
-     */
+
     boolean isAlive;
     
     /**
@@ -43,11 +41,12 @@ public class Alien extends Move {
     
 
     /**
-     * Default constructor for Alien.
-     * It gets the alien's type and starts all attributes of the 
-     * alien object with the default values and its proper sprite.
+     * Default constructor for Alien.It gets the alien's type and starts all attributes of the 
+     *  alien object with the default values and its proper sprite.
      * 
      * @param type type of alien (1, 2 or 3). Dwfault is type 1.
+     * @param speed speed of the aliens.
+     * @param size screen size.
      */
     public Alien(int type,  double speed, Coordinates size) {
         super(0, 0, speed, size);
@@ -59,9 +58,11 @@ public class Alien extends Move {
     
     /**
      * 
-     * @param coordinates_for_check
-     * @param sprite_for_check
-     * @return 
+     * Checks for collision of objects.
+     * 
+     * @param coordinates_for_check coordinates for the object collision check.
+     * @param sprite_for_check sprite to get the collision area of the object.
+     * @return returns points from the dead aliens. 
      */
     public int checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
         double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
@@ -90,6 +91,12 @@ public class Alien extends Move {
         return r;
     }
     
+    
+    /**
+     * draws on the screen.
+     * 
+     * @param main screen to draw the sprite.
+     */
     public void draw(AnchorPane main) {
         sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);
@@ -98,31 +105,49 @@ public class Alien extends Move {
         main.getChildren().add(sprite.getImageView());
         bullet.draw(main);
     }
-    
+
+    /**
+     * moves the sprite already drawn earlier.
+     */
     public void drawMove() {
         sprite.getImageView().setX(coordinates.getX());
         sprite.getImageView().setY(coordinates.getY());
     }
     
+    /**
+     * Removes the sprite from the screen.
+     * 
+     * @param main screen from which the sprite will be removed.
+     */
      public void destructor(AnchorPane main) {
          bullet.destructor(main);
          main.getChildren().remove(sprite.getImageView());
      }
     
     /**
+     *  Get the Bullet.
      * 
-     * @return 
+     * @return  return the Bullet.
      */
     public Bullet getBullet() {
         return bullet;
     }
     
+    /**
+     * Check to see if the alien is alive.
+     * @return returns true if the alien is alive and false otherwise.
+     */
     public boolean getIsAlive() {
         return isAlive;
     }
-
+    
+    /**
+     * It takes the score according to the type of the alien.
+     * 
+     * @return returns the score according to the type of the dead alien.
+     */
     public int getPointWithKill() {
-        int r = 0;
+        int r;
         switch(type) {
             case 1:
                 r = 100;

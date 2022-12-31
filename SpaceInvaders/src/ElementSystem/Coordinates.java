@@ -64,8 +64,9 @@ public class Coordinates {
     }
 
     /**
+     * Arrows the coordinates based on other coordinates.
      * 
-     * @param coordinates
+     * @param coordinates coordinates for the copy.
      */
     public void setCoordinates(Coordinates coordinates) {
         this.x = coordinates.getX();

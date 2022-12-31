@@ -56,7 +56,10 @@ public class ScreenFXMLController implements Initializable {
 
     @FXML
     private AnchorPane game_pane;
-
+    
+    @FXML
+    private ImageView turotial_image;
+    
     @FXML
     private Label text_score;
 
@@ -68,6 +71,7 @@ public class ScreenFXMLController implements Initializable {
         b_Start.setDisable(false);
         b_Tutorial.setVisible(true);
         b_Tutorial.setDisable(false);
+        turotial_image.setVisible(false);
     }
     
     public void menuDisable() {
@@ -100,8 +104,10 @@ public class ScreenFXMLController implements Initializable {
 
     public void tutorial() {
         menuDisable();
+        turotial_image.setVisible(true);
         g = new Game(3, game_pane, life, label_score, text_score);
         g.draw(main, game_pane);
+        onMenu = false;
     }
 
     @Override

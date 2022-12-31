@@ -21,20 +21,13 @@ public class Move {
         this.screen_size = screen_size;
     }
     
-    /**
-     * 
-     * @param x
-     * @param y 
-     */
+
     public void move(double x, double y) {
         coordinates.setX(coordinates.getY() + (x * speed));
         coordinates.setY(coordinates.getY() + (y * speed));
     }
     
-        /**
-     * 
-     * @return
-     */
+
     public Coordinates getCoordinates() {
         return coordinates;
     }

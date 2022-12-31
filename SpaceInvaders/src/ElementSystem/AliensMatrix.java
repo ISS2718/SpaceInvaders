@@ -59,15 +59,17 @@ public class AliensMatrix extends Move {
     private Coordinates sprite_size;
 
     /**
-     * Default constructor for AliensMatrix.
-     * It takes the number of columns and the 
-     * dimensions of the game display screen.
-     * It starts the coordinate at the maximum height 
-     * and minimum width point. Starts the speed as 1 
+     * Default constructor for AliensMatrix.It takes the number of columns and the 
+     * dimensions of the game display screen.It starts the coordinate at the maximum height 
+     * and minimum width point.Starts the speed as 1 
      * and builds the matrix starting all rows and all columns 
      * with their respective aliens.
      * 
      * @param quantity_columns Quantity of columns in the aliens matrix.
+     * @param aliens_spacing spacing between the aliens
+     * @param speed speed of the aliens
+     * @param bullet_speed bullet velocity
+     * @param level alien wave level.
      * @param size Dimensions of the game display screen
      */
     public AliensMatrix(int quantity_columns, double aliens_spacing, double speed, double bullet_speed, int level, Coordinates size) {
@@ -103,7 +105,15 @@ public class AliensMatrix extends Move {
             }
         }
     }
-    
+
+     /**
+     * 
+     * Checks for collision of Bullets.
+     * 
+     * @param coordinates_for_check coordinates for the object collision check.
+     * @param sprite_for_check sprite to get the collision area of the object.
+     * @return returns points from the dead aliens. 
+     */
     public int checkColisionWithBullet(Coordinates coordinates_for_check, Sprite sprite_for_check)  {
         int r = 0;
         colisionCheck:
@@ -121,9 +131,9 @@ public class AliensMatrix extends Move {
     }
     
     /**
+     * draws on the screen.
      * 
-     * @param line 
-     * @param x_coordinate
+     * @param main screen to draw the sprite.
      */
     public void draw(AnchorPane main) {
         for (int i = (quantity_row - 1); i >= 0; i--) {
@@ -135,6 +145,9 @@ public class AliensMatrix extends Move {
          }
      }
 
+    /**
+     * moves the sprite already drawn earlier.
+     */
     public void drawMove() {
          for (int i = (quantity_row - 1); i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
@@ -145,6 +158,11 @@ public class AliensMatrix extends Move {
         }
      }
 
+    /**
+     * Removes the sprite from the screen.
+     * 
+     * @param main screen from which the sprite will be removed.
+     */
     public void destructor(AnchorPane main) {
          for (int i = (quantity_row - 1); i >= 0; i--) {
              for (int j = 0; j < quantity_columns; j++) {
@@ -154,7 +172,9 @@ public class AliensMatrix extends Move {
      }
     
     /**
+     * Moves the alien matrix.
      * 
+     * @return returns if you have reached the end of the screen.
      */
     public boolean move() {
         boolean r = false;
@@ -232,20 +252,26 @@ public class AliensMatrix extends Move {
         return r;
     }
 
+    /**
+     * Get how many columns there are in the alien matrix.
+     * 
+     * @return returns number of columns.
+     */
     public int getcolumns() {
         return quantity_columns;
     }
 
     /**
+     * Get how many rows there are in the alien matrix.
      * 
-     * @return
+     * @return returns number of rows.
      */
     public int getRows() {
         return quantity_row;
     }
 
     /**
-     * 
+     * Shoot with a random amount of aliens and with random aliens.
      */
     public void randomShot() {
         Random rand = new Random();
@@ -270,7 +296,11 @@ public class AliensMatrix extends Move {
         }
     }
     
-
+    /**
+     * Check the first column of living aliens.
+     * 
+     * @return returns index first column of living aliens.
+     */
     public int firstLiveColumn() {
         int r = -1;
         firstLiveColumn:
@@ -285,6 +315,11 @@ public class AliensMatrix extends Move {
         return r;
     }
     
+    /**
+     * Check the first row of living aliens.
+     * 
+     * @return returns index first row of living aliens.
+     */
     public int firstLiveRow() {
         int r = -1;
         firstLiveRow:
@@ -299,7 +334,11 @@ public class AliensMatrix extends Move {
         return r;
     }
     
-    
+    /**
+     * Check the last column of living aliens.
+     * 
+     * @return returns index last column of living aliens.
+     */
     public int lastLiveColumn() {
         int r = -1;
         lastLiveColumn:
@@ -314,6 +353,11 @@ public class AliensMatrix extends Move {
         return r;
     }
     
+    /**
+     * Check the last row of living aliens.
+     * 
+     * @return returns index last row of living aliens.
+     */
     public int lastLiveRow() {
         int r = -1;
         lastLiveRow:
@@ -328,6 +372,11 @@ public class AliensMatrix extends Move {
         return r;
     }
 
+    /**
+     * Check the amount of living aliens in the matrix.
+     * 
+     * @return returns the number of living aliens in the matrix. 
+     */
     public int quantityAliensAlived() {
         int r = 0;
         for (int i = 0; i < quantity_row; i++) {

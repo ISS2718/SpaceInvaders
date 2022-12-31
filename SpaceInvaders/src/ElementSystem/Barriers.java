@@ -51,22 +51,14 @@ public class Barriers extends Static {
         return r;
     }
     
-    /**
-     *
-     *
-     * @param main
-     */
+
     public void draw(AnchorPane main) {
         for (int i = 0; i < quantity_barriers; i++) {
             barriers[i].draw(main);
         }
     }
     
-    /**
-     *
-     *
-     * @param main
-     */
+
     public void destructor(AnchorPane main) {
         for (int i = 0; i < quantity_barriers; i++) {
             barriers[i].destructor(main);

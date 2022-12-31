@@ -2,18 +2,11 @@ package ElementSystem;
 
 import javafx.scene.layout.AnchorPane;
 
-/**
- * 
- */
+
 public class Barrier extends Static {
-    /**
-     * 
-     */
+
     private final int height;
-    
-    /**
-     * 
-     */
+
     private final int width;
     
     private Brick[][] barrier;
@@ -59,11 +52,7 @@ public class Barrier extends Static {
         return r;
     }
     
-    /**
-     * 
-     * 
-     * @param main
-     */
+
     public void draw(AnchorPane main) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -80,18 +69,12 @@ public class Barrier extends Static {
         }
     }
     
-    /**
-     * 
-     * @return 
-     */
+
     public int getHeight() {
         return height;
     }
     
-    /**
-     * 
-     * @return 
-     */
+
     public int getWidth() {
         return width;
     }

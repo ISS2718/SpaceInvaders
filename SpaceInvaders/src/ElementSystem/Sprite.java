@@ -12,29 +12,18 @@ import javafx.scene.image.*;
  * @author isaac
  */
 public class Sprite {
-   /**
- *
- */
-private ImageView sprite;
+
+   private ImageView sprite;
    
-   /**
-    * Default constructor.
-    * 
-     * @param path_image
-    */
+
    public Sprite(String path_image) {
         this.sprite = new ImageView(path_image);
    }
-   
-      /**
-    * Default constructor.
-    * 
-     * @param image
-    */
+
    public Sprite(Image image) {
        this.sprite = new ImageView(image);
    }
-   
+
    public ImageView getImageView() {
        return sprite;
    }

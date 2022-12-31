@@ -7,25 +7,16 @@ import javafx.scene.layout.AnchorPane;
  * 
  */
 public class Spaceship extends Move {
-    /**
-     * 
-     */
+ 
     private boolean front_move;
     
-    /**
-     * 
-     */
+
     private boolean isAlive;
     
-    /**
-    * 
-    */
+
     private final Sprite sprite;
     
-    /**
-     * 
-     * @param size
-     */
+
     public Spaceship(Coordinates size) {
         super(0, 5, 0.5, size);
         isAlive = false;
@@ -33,12 +24,7 @@ public class Spaceship extends Move {
         sprite = new Sprite("sprites/nave.png");
     }
    
-    /**
-     * 
-     * @param coordinates_for_check
-     * @param sprite_for_check
-     * @return 
-     */
+
     public int checkColision(Coordinates coordinates_for_check, Sprite sprite_for_check) {
         double lower_limit = (coordinates.getY() + sprite.getImageView().getImage().getHeight());
         double upper_limit = (coordinates.getY() - sprite.getImageView().getImage().getHeight());
@@ -65,11 +51,7 @@ public class Spaceship extends Move {
         return r;
     }
     
-    /**
-     * 
-     * 
-     * @param x_coordinate
-     */
+
    public void draw(AnchorPane main) {
        sprite.getImageView().setLayoutX(0);
         sprite.getImageView().setLayoutY(0);
@@ -79,11 +61,7 @@ public class Spaceship extends Move {
         main.getChildren().add(sprite.getImageView());
     }
    
-       /**
-     * 
-     * 
-     * @param x_coordinate
-     */
+
    public void drawMove() {
         sprite.getImageView().setX(coordinates.getX());
         sprite.getImageView().setY(coordinates.getY());
@@ -93,10 +71,7 @@ public class Spaceship extends Move {
         main.getChildren().remove(sprite.getImageView());
     }   
     
-    /**
-     * 
-     * @param max_coordinates 
-     */
+
     public void move() {
         if(isAlive) {
             if (front_move == true) {
@@ -129,10 +104,7 @@ public class Spaceship extends Move {
         }
     }
     
-    /**
-     * 
-     * @param front_move 
-     */
+
     public void setSideToMove(boolean front_move) {
         this.front_move = front_move; 
         if(front_move) {

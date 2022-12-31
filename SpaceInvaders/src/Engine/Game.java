@@ -6,89 +6,48 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-/**
- * 
- */
 public class Game {
     
-    /**
-     * 
-     */
     private ImageView alieninvasion; 
-    
-    /**
-     * 
-     */
+
     private AliensMatrix aliensMatrix;
     
     private int aliensMatrix_level;
-    
-    /**
-     * 
-     */
+
     private Barriers barriers;
 
-    /**
-     * 
-     */
     private Cannon cannon;
     
     private AnimationTimer gameloop;
-    
-    /**
-     * 
-     */
+
     private ImageView gameover;
     
     private int gameOverType;
 
-    
-    /**
-     *
-     */
     boolean have_spaceShip;
     
     AnchorPane game_pane;
-    
-    /**
-     * 
-     */
+
     private Player player;
     
     private boolean pressedLEFT;
+
     private boolean pressedRIGHT;
+
     private boolean pressedSPACE;
-    
-    /**
-     * 
-     */
+
     private int rounds;
-    
-    /**
-     * 
-     */
+
     private ImageView saveearth;
-    
-    /**
-     * 
-     */
+
     private Spaceship spaceShip;
-    
-    /**
-     * 
-     */
+
     private Screen screen;
     
     private long timer;
-    
-    /**
-     * 
-     */ 
+
     private ImageView youdied;
 
-    /**
-     * 
-     */
     public Game(int roudns, AnchorPane game_pane, Label label_life, Label label_score, Label text_score) {
         this.game_pane = game_pane;
         screen = new Screen(game_pane.getWidth(), game_pane.getHeight());
@@ -307,51 +266,27 @@ public class Game {
         main.getChildren().remove(saveearth);
         main.getChildren().remove(youdied);
     }
-
-    /**
-     * 
-     * @return
-     */
+    
     public AliensMatrix getAliensMatrix() {
         return aliensMatrix;
     }
 
-    /**
-     * 
-     * @return
-     */
     public Barriers getBarriers() {
         return barriers;
     }
 
-    /**
-     * 
-     * @return
-     */
     public Cannon getCannon() {
         return cannon;
     }
 
-    /**
-     * 
-     * @return
-     */
     public Player getPlayer() {
         return player;
     }
 
-    /**
-     * 
-     * @return
-     */
     public Spaceship getSpaceship() {
         return spaceShip;
     }
     
-    /**
-     * 
-     * @return 
-     */
     public boolean getHaveSpaceShip() {
         return have_spaceShip;
     }

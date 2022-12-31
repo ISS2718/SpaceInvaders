@@ -65,12 +65,16 @@ public class Bullet extends Move {
         sprite.getImageView().setVisible(false);
     }
     
+    public void destructor(AnchorPane main) {
+        main.getChildren().remove(sprite.getImageView());
+    }
+    
     public void drawMove() { 
         if(flagShot) {
             if(isCannon) {
                 sprite.getImageView().setY((coordinates.getY() - sprite.getImageView().getImage().getHeight()));   
             } else {
-                sprite.getImageView().setY((coordinates.getY() + sprite.getImageView().getImage().getHeight()));
+                sprite.getImageView().setY(coordinates.getY());
             }
         } else {
             sprite.getImageView().setX(coordinates.getX());
@@ -102,8 +106,10 @@ public class Bullet extends Move {
             }
         } else {
             //System.out.println("Coordenada Y: " + (coordinates.getY() + sprite.getImageView().getImage().getHeight()) + ". Coordenada max Y: " + max_Y_coordinates);
-            if ((coordinates.getY() + sprite.getImageView().getImage().getHeight()) > max_Y_coordinates) {
+            if ((coordinates.getY() + sprite.getImageView().getImage().getHeight()) < max_Y_coordinates) {
+                
                 coordinates.setY(coordinates.getY() + speed);
+                
             } else {
                 missedShot = true;
             }
@@ -131,10 +137,10 @@ public class Bullet extends Move {
      * @param max_coordinates
      * @param shoted
      */
-    public void shot(Coordinates ini_coordinates, Sprite shot_sprite) {
+    public void shot(Coordinates ini_coordinates, Sprite shoter_sprite) {
         if(flagShot == false) {
-            coordinates.setX(ini_coordinates.getX() + shot_sprite.getImageView().getImage().getWidth()/2);
-            coordinates.setY(ini_coordinates.getY() - 21);
+            coordinates.setX(ini_coordinates.getX() + shoter_sprite.getImageView().getImage().getWidth()/2);
+            coordinates.setY(ini_coordinates.getY() - (shoter_sprite.getImageView().getImage().getHeight() - sprite.getImageView().getImage().getHeight()));
             drawMove();
             flagShot = true;
             missedShot = false;

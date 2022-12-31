@@ -99,6 +99,7 @@ public class Alien extends Move {
     }
     
      public void destructor(AnchorPane main) {
+         bullet.destructor(main);
          main.getChildren().remove(sprite.getImageView());
      }
     

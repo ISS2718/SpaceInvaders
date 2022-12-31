@@ -96,8 +96,9 @@ public class Game {
             @Override
             public void handle(long now) {
                 if(gameOverType == 0) {
-                    checkColision();
                     checkgameOver(aliensMatrix.move());
+                    aliensMatrix.randomShot();
+                    checkColision();
                 } else {
                     aliensMatrix.move();
                 }
@@ -126,15 +127,18 @@ public class Game {
     }
     
     public void checkColision() {
-        //collision of the aliens with the barriers
         aliensMatrix.checkColisionWithBarrier(barriers);
 
-        int incscore = 0;
-        //collision of the cannon shot
+        //If it was cannon it was shot diminished life.
+        if(aliensMatrix.moveShotsCheckColision(cannon, barriers)) {
+            player.decreasesLifes();
+        }
+
+        int incscore;
+        //Collision of the cannon shot
         if(cannon.getBullet().getFlagShot()) {
             if (barriers.checkColision(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) {
                 cannon.getBullet().setShoted();
-                player.decreasesLifes();
             } else if((incscore = aliensMatrix.checkColisionWithBullet(cannon.getBullet().getCoordinates(), cannon.getBullet().getSprite())) != 0) {
                 cannon.getBullet().setShoted();
                 player.increasesScore(incscore);

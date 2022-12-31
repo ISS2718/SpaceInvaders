@@ -1,5 +1,7 @@
 package ElementSystem;
 
+import java.util.Random;
+
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -43,7 +45,14 @@ public class AliensMatrix extends Move {
      * Quantity of rows in the alies matrix.
      */
     private int quantity_row = 5;
+
+    /**
+     * The number of possible shots of the Alien Matrix.
+     */
+    private int quantity_shots;
     
+    private boolean shoted;
+
     /**
      *  Sprite size (width, height).
      */
@@ -63,7 +72,9 @@ public class AliensMatrix extends Move {
      */
     public AliensMatrix(int quantity_columns, double aliens_spacing, double speed, Coordinates size) {
        super(0,  50, speed, size);
+       this.shoted = false;
        this.quantity_columns = quantity_columns;
+       this.quantity_shots = 4;
        aliens = new Alien[5][this.quantity_columns];
        for (int i = 0; i < this.quantity_columns; i++) {
            aliens[0][i] = new Alien(1, speed,  size);
@@ -75,7 +86,12 @@ public class AliensMatrix extends Move {
        sprite_size = new Coordinates(aliens[0][0].getSprite().getImageView().getImage().getWidth(), aliens[0][0].getSprite().getImageView().getImage().getHeight());
        this.aliens_spacing = aliens_spacing;
     }
-    
+
+    /**
+     * Check collision of the aliens with the barriers.
+     * 
+     * @param barriers To check for collision.
+     */
     public void checkColisionWithBarrier(Barriers barriers) {
         for (int i = (quantity_row - 1); i >= 0; i--) {
             for (int j = 0; j < quantity_columns; j++) {
@@ -187,6 +203,36 @@ public class AliensMatrix extends Move {
         return r;
     }
 
+    /**
+     * Move shots and check collision with the barriers and the cannon.
+     * 
+     * @param cannon To check for collision.
+     * @param barriers To check for collision.
+     * 
+     * @return Returns true if the cannon is hit.
+     */
+    public boolean moveShotsCheckColision(Cannon cannon, Barriers barriers) {
+        boolean r = false;
+        shoted =  false;
+        for (int i = 0; i < quantity_row; i++) {
+            for (int j = 0; j < quantity_columns; j++) {
+                if (aliens[i][j].getBullet().getFlagShot()) {
+                    aliens[i][j].getBullet().move();
+
+                    if(cannon.checkColision(aliens[i][j].getBullet().getCoordinates(), aliens[i][j].getBullet().getSprite())) {
+                        aliens[i][j].getBullet().setShoted();
+                        r = true;
+                    } else if(barriers.checkColision(aliens[i][j].getBullet().getCoordinates(), aliens[i][j].getBullet().getSprite())) {
+                        aliens[i][j].getBullet().setShoted();
+                    } else {
+                        shoted = true;
+                    }
+                }
+            }
+        }
+        return r;
+    }
+
     public int getcolumns() {
         return quantity_columns;
     }
@@ -203,6 +249,16 @@ public class AliensMatrix extends Move {
      * 
      */
     public void randomShot() {
+        Random rand = new Random();
+        int quantity = rand.nextInt(quantity_shots + 1);
+        if ((shoted == false) && (quantity != 0)) {
+            for (int i = 0; i < quantity; i++) {
+                int collumn = rand.nextInt(quantity_columns);
+                int row = rand.nextInt(quantity_row);
+                aliens[row][collumn].getBullet().shot(aliens[row][collumn].getCoordinates(), aliens[row][collumn].getSprite());
+            }
+            shoted =  true;
+        }
     }
     
 

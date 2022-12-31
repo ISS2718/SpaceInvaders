@@ -140,7 +140,12 @@ public class Bullet extends Move {
     public void shot(Coordinates ini_coordinates, Sprite shoter_sprite) {
         if(flagShot == false) {
             coordinates.setX(ini_coordinates.getX() + shoter_sprite.getImageView().getImage().getWidth()/2);
-            coordinates.setY(ini_coordinates.getY() - (shoter_sprite.getImageView().getImage().getHeight() - sprite.getImageView().getImage().getHeight()));
+            if(isCannon) {
+                coordinates.setY(ini_coordinates.getY() - (shoter_sprite.getImageView().getImage().getHeight() - sprite.getImageView().getImage().getHeight()));
+            } else {
+                coordinates.setY(ini_coordinates.getY() + (shoter_sprite.getImageView().getImage().getHeight() - sprite.getImageView().getImage().getHeight()));
+            }
+            
             drawMove();
             flagShot = true;
             missedShot = false;

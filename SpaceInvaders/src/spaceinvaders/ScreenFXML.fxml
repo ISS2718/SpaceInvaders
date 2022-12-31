@@ -9,31 +9,11 @@
 
 <AnchorPane id="AnchorPane" fx:id="main" prefHeight="750.0" prefWidth="600.0" styleClass="background" stylesheets="@../style/m_backgorud.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="spaceinvaders.ScreenFXMLController">
    <children>
-      <AnchorPane fx:id="pane_jogo" layoutX="25.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="550.0" styleClass="background" stylesheets="@../style/m_backgorud.css">
+      <AnchorPane fx:id="game_pane" layoutX="25.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="550.0" styleClass="background" stylesheets="@../style/m_backgorud.css">
          <children>
             <ImageView fx:id="menu" fitHeight="650.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../sprites/menu_s.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="gameover" fitHeight="709.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../sprites/GameOver.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="alieninvasion" fitHeight="650.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../sprites/Aliens_Invaded.png.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="saveearth" fitHeight="650.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../sprites/Save_Earth.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="youdied" fitHeight="650.0" fitWidth="579.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="@../sprites/You_Died.png.png" />
                </image>
             </ImageView>
             <Button fx:id="b_Start" layoutX="234.0" layoutY="429.0" mnemonicParsing="false" onAction="#start" stylesheets="@../style/m_button.css" text="Start" textAlignment="CENTER" textFill="WHITE">

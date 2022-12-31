@@ -20,7 +20,9 @@ public class Game {
      * 
      */
     private AliensMatrix aliensMatrix;
-
+    
+    private int aliensMatrix_level;
+    
     /**
      * 
      */
@@ -45,7 +47,9 @@ public class Game {
      *
      */
     boolean have_spaceShip;
-
+    
+    AnchorPane game_pane;
+    
     /**
      * 
      */
@@ -54,6 +58,11 @@ public class Game {
     private boolean pressedLEFT;
     private boolean pressedRIGHT;
     private boolean pressedSPACE;
+    
+    /**
+     * 
+     */
+    private int rounds;
     
     /**
      * 
@@ -70,6 +79,8 @@ public class Game {
      */
     private Screen screen;
     
+    private long timer;
+    
     /**
      * 
      */ 
@@ -78,10 +89,12 @@ public class Game {
     /**
      * 
      */
-    public Game(double width, double height, Label label_life, Label label_score, Label text_score) {
-        screen = new Screen(width, height);
-        aliensMatrix = new AliensMatrix(11,  15, 0.2, screen.getSize());
-        cannon = new Cannon(15, screen.getSize());
+    public Game(int roudns, AnchorPane game_pane, Label label_life, Label label_score, Label text_score) {
+        this.game_pane = game_pane;
+        screen = new Screen(game_pane.getWidth(), game_pane.getHeight());
+        aliensMatrix_level = 1;
+        aliensMatrix = new AliensMatrix(11,  15, 0.3, 2, aliensMatrix_level, screen.getSize());
+        cannon = new Cannon(15, 2, screen.getSize());
         player = new Player(3, 3, label_life, label_score, text_score);
         have_spaceShip = false;
         barriers = new Barriers(3, screen.getSize());
@@ -92,31 +105,37 @@ public class Game {
         pressedRIGHT = false;
         pressedSPACE = false;
         
+        this.rounds = roudns;
+        
+        timer = 0;
+        
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if(gameOverType == 0) {
                     checkgameOver(aliensMatrix.move());
                     aliensMatrix.randomShot();
-                    checkColision();
+                    checkColision(now);
                 } else {
                     aliensMatrix.move();
                 }
                 
-                if(pressedLEFT) {
-                    cannon.moveLeft();
-                    pressedLEFT = false;
-                }
-                
-                if (pressedRIGHT) {
-                    cannon.moveRight();
-                    pressedRIGHT = false;
-                }
-                
-                if (pressedSPACE) {
-                    cannon.getBullet().shot(cannon.getCoordinates(), cannon.getSprite());
-                    if(cannon.getBullet().getFlagShot() == false) {
-                        pressedSPACE = false;
+                if((player.getLifes() != 0)) {
+                    if (pressedLEFT) {
+                        cannon.moveLeft();
+                        pressedLEFT = false;
+                    }
+
+                    if (pressedRIGHT) {
+                        cannon.moveRight();
+                        pressedRIGHT = false;
+                    }
+
+                    if (pressedSPACE) {
+                        cannon.getBullet().shot(cannon.getCoordinates(), cannon.getSprite());
+                        if (cannon.getBullet().getFlagShot() == false) {
+                            pressedSPACE = false;
+                        }
                     }
                 }
             }
@@ -126,13 +145,25 @@ public class Game {
 
     }
     
-    public void checkColision() {
+    public void checkColision(long now) {
         aliensMatrix.checkColisionWithBarrier(barriers);
 
         //If it was cannon it was shot diminished life.
-        if(aliensMatrix.moveShotsCheckColision(cannon, barriers)) {
-            player.decreasesLifes();
-        }
+        if(aliensMatrix.checkShotsColision(cannon, barriers)) {
+            if(!cannon.getIsInvencible()) {
+                player.decreasesLifes();
+                timer = now;
+                cannon.setInvencible();
+                if(player.getLifes() == 0) {
+                    cannon.destructor(game_pane);
+                }
+            }
+        } 
+        
+          if(timer != 0 &&  now - timer >=  1500000000) {
+                timer = 0;
+                cannon.setVencible();
+           }
 
         int incscore;
         //Collision of the cannon shot
@@ -148,7 +179,16 @@ public class Game {
 
     public void checkgameOver(boolean aliens_on_Earth) {
         if (aliensMatrix.quantityAliensAlived() == 0) {
-            gameOverType = 3;
+            if(rounds == 0) {
+                gameOverType = 3;
+            } else {
+                aliensMatrix.destructor(game_pane);
+                aliensMatrix_level++;
+                aliensMatrix = new AliensMatrix(11,  15, 0.3, 2, aliensMatrix_level, screen.getSize());
+                aliensMatrix.draw(game_pane);
+                rounds--;
+            }
+            
         } else if (aliens_on_Earth) {
             gameOverType = 2;
         } else if (player.getLifes() == 0) {
@@ -179,20 +219,20 @@ public class Game {
     }
 
 
-    public void destructor(AnchorPane main, AnchorPane pane_jogo) {
-        cannon.destructor(pane_jogo);
-        aliensMatrix.destructor(pane_jogo);
-        barriers.destructor(pane_jogo);
+    public void destructor(AnchorPane main, AnchorPane game_pane) {
+        cannon.destructor(game_pane);
+        aliensMatrix.destructor(game_pane);
+        barriers.destructor(game_pane);
         player.destructor(main);
-        gameOverDestructor(pane_jogo);
+        gameOverDestructor(game_pane);
     }
 
-    public void draw(AnchorPane main, AnchorPane pane_jogo) {
-        cannon.draw(pane_jogo);
-        aliensMatrix.draw(pane_jogo);
-        barriers.draw(pane_jogo);
+    public void draw(AnchorPane main, AnchorPane game_pane) {
+        cannon.draw(game_pane);
+        aliensMatrix.draw(game_pane);
+        barriers.draw(game_pane);
         player.draw(main);
-        gameOverSetup(pane_jogo);
+        gameOverSetup(game_pane);
     }
     
     public void gameLoopStart(){

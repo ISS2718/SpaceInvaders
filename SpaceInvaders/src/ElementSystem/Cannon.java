@@ -1,5 +1,6 @@
 package ElementSystem;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -12,22 +13,31 @@ public class Cannon extends Move {
      */
     private Bullet bullet;
     
+   private Image cannon;
+   
+   private boolean invencible;
+   
+   private Image invincible_cannon;
+    
     /**
      * 
      */
     private Sprite sprite;
 
     private Coordinates sprite_size;
-
+    
     /**
      * Default constructor
      * 
      * @param speed
      */
-    public Cannon(double speed, Coordinates size) {
-        super(size.getX()/2, size.getY(), speed, size);
-        this.bullet = new Bullet(2, size, true);
-        sprite = new Sprite("sprites/canhao.png");
+    public Cannon(double speed, double bullet_spped, Coordinates size) {
+        super(size.getX()/2, size.getY() - 3, speed, size);
+        this.bullet = new Bullet(bullet_spped, size, true);
+        cannon = new Image("sprites/canhao.png");
+        invincible_cannon = new Image("sprites/canhao_in.gif");
+        invencible = false;
+        sprite = new Sprite(cannon);
         sprite_size = new Coordinates(sprite.getImageView().getImage().getWidth(), sprite.getImageView().getImage().getHeight());
     }
     
@@ -69,7 +79,6 @@ public class Cannon extends Move {
         sprite.getImageView().setX(coordinates.getX());
         sprite.getImageView().setY(coordinates.getY() - sprite.getImageView().getImage().getHeight());
         main.getChildren().add(sprite.getImageView());
-        
         this.bullet.draw(main);
     }
     
@@ -83,6 +92,10 @@ public class Cannon extends Move {
      */
     public Bullet getBullet() {
         return bullet;
+    }
+    
+    public boolean getIsInvencible() {
+        return invencible;
     }
     
     public Sprite getSprite() {
@@ -109,5 +122,14 @@ public class Cannon extends Move {
              }
             drawMove();
         }
+    }
+    public void setInvencible() {
+         invencible = true;
+         sprite.getImageView().setImage(invincible_cannon);
+    }
+    
+    public void setVencible() {
+        invencible = false;
+        sprite.getImageView().setImage(cannon);
     }
 }

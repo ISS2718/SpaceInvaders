@@ -55,7 +55,7 @@ public class ScreenFXMLController implements Initializable {
     private ImageView menu;
 
     @FXML
-    private AnchorPane pane_jogo;
+    private AnchorPane game_pane;
 
     @FXML
     private Label text_score;
@@ -81,7 +81,7 @@ public class ScreenFXMLController implements Initializable {
     
     public void menuReturn() {
         g.gameLoopStop();
-        g.destructor(main, pane_jogo);
+        g.destructor(main, game_pane);
         menuEnable();
         onMenu = true;
     }
@@ -90,9 +90,9 @@ public class ScreenFXMLController implements Initializable {
         menuDisable();
         onMenu = false;
 
-        g = new Game(pane_jogo.getPrefWidth(), pane_jogo.getPrefHeight(), life, label_score, text_score);
+        g = new Game(3, game_pane, life, label_score, text_score);
         
-        g.draw(main, pane_jogo);
+        g.draw(main, game_pane);
         
         g.gameLoopStart();
         
@@ -100,8 +100,8 @@ public class ScreenFXMLController implements Initializable {
 
     public void tutorial() {
         menuDisable();
-        g = new Game(pane_jogo.getPrefWidth(), pane_jogo.getPrefHeight(), life, label_score, text_score);
-        g.draw(main, pane_jogo);
+        g = new Game(3, game_pane, life, label_score, text_score);
+        g.draw(main, game_pane);
     }
 
     @Override

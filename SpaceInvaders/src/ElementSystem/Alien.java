@@ -53,7 +53,7 @@ public class Alien extends Move {
         super(0, 0, speed, size);
         this.type = type;
         setTypeSprite();
-        bullet = new Bullet(1.0, size, false);
+        bullet = new Bullet(speed, size, false);
         isAlive = true;
     }
     

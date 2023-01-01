@@ -6,13 +6,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Launch Ex2Lista11",
-            "request": "launch",
-            "mainClass": "servidor.Ex2Lista11",
-            "projectName": ""
-        },
-        {
-            "type": "java",
             "name": "Launch SpaceInvaders",
             "request": "launch",
             "mainClass": "spaceinvaders.SpaceInvaders",

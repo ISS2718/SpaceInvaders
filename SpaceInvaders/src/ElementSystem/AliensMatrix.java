@@ -187,7 +187,7 @@ public class AliensMatrix extends Move {
         double right_speed = speed  + ((10 * speed) / quantityAliensAlived());
         double leftt_speed = speed + ((5 * speed) / quantityAliensAlived());
         
-        double down_speed = (sprite_size.getY()/3);
+        double down_speed = (sprite_size.getY()/4);
         
         double min_height_AliensMatrix = (screen_size.getY() - (((quantity_row  * sprite_size.getY()) + ((quantity_row) * aliens_spacing))) + ((firstLiveRowAlienMatrix* sprite_size.getY())) + (firstLiveRowAlienMatrix * aliens_spacing));
         double origin_point_AliensMatrix =  (-1 * ((firstLiveColumnAlienMatrix * sprite_size.getX()) + ((firstLiveColumnAlienMatrix) * aliens_spacing))) + (2 * (firstLiveColumnAlienMatrix + 1));
@@ -275,7 +275,7 @@ public class AliensMatrix extends Move {
      */
     public void randomShot() {
         Random rand = new Random();
-        int quantity = rand.nextInt(quantity_shots);
+        int quantity = rand.nextInt(quantity_shots * 120);
         if ((shoted == false) && (quantity <= quantity_shots)) {
             for (int i = 0; i < quantity; i++) {
                 int collumn = rand.nextInt(quantity_columns);

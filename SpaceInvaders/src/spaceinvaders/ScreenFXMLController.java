@@ -94,7 +94,8 @@ public class ScreenFXMLController implements Initializable {
         menuDisable();
         onMenu = false;
 
-        g = new Game(3, game_pane, life, label_score, text_score);
+        g = new Game(3, game_pane, 
+            life, label_score, text_score);
         
         g.draw(main, game_pane);
         

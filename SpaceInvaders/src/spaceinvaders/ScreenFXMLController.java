@@ -31,7 +31,6 @@ public class ScreenFXMLController implements Initializable {
     private Game g;
     
     private boolean onMenu;
-    private boolean onGameOver;
 
     @FXML
     private Button b_Start;
@@ -114,7 +113,6 @@ public class ScreenFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         onMenu = true;
-        onGameOver = false;
     }    
     
     public void  setupKeyListner(Scene scene) {
@@ -138,7 +136,7 @@ public class ScreenFXMLController implements Initializable {
                     }
                     break;
                 case ESCAPE:
-                    if(!onMenu || onGameOver) {
+                    if(!onMenu) {
                         menuReturn();
                     } else  {
                         System.exit(0);

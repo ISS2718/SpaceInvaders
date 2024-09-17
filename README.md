@@ -20,7 +20,7 @@ O jogo era "impresso" no terminal para ver a implementação das movimentações
 ## [Space Invaders](SpaceInvaders)
 
 A segunda parte do projeto foi implentar, para nossa estrutura já anteriormente implementada, uma interface gráfica utilizando JavaFx. 
-Além de terminar o jogo e torana-lo jogável.
+Além de terminar o jogo e torna-lo jogável.
 
  ## License
 [MIT License](https://github.com/ISS2718/SpaceInvaders/blob/master/LICENSE) © [Isaac Soares](https://github.com/ISS2718)
